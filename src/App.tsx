@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import UserAuth from '../src/auth/UserAuth'
 
-function App() {
-  return (
-    <div className="App">
-      <div>
-        <h1>Hello World. Start here!</h1>
+class App extends Component {  
+  render() {
+    return (
+      <div className="App">
+        <div>
+          <UserAuth />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+
 }
 
 export default App;
