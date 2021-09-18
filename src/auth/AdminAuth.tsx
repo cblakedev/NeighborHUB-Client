@@ -1,30 +1,34 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Tabs, Tab } from 'react-bootstrap';
+import AdminLogin from './AdminLogin';
+import AdminRegister from './AdminRegister';
 
 
 type AdminAuthProps = {
+    token: (newToken: string) => void
 }
 
 type AdminAuthState = {
 }
 
 class AdminAuth extends Component<AdminAuthProps, AdminAuthState> {
-    state: AdminAuthState = {
+    constructor(props: AdminAuthProps) {
+        super(props)
+        this.state = {
        
+        }
     }
-
-
-
+    
     render() {
         return (
-            <Container className='main'>
-                <Row>
+            <Container className='mainAuthWrapper'>
+                <Row className='authWrapper'>
                     <Tabs id="authTab" defaultActiveKey="login">
                         <Tab eventKey='login' title='Login'>
-                            <p>I am login tab for Admin</p>
+                            <AdminLogin token={this.props.token}/>
                         </Tab>
                         <Tab eventKey='register' title='Register'>
-                            <p>I am Register tab for Admin</p>
+                            <AdminRegister token={this.props.token}/>
                         </Tab>
                     </Tabs>
                 </Row>
