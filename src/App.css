@@ -27,3 +27,23 @@
         margin: 0 !important;
     }
 }
+
+/* Home Styles */
+.headerBar {
+    background-color: lightcoral;
+}
+
+.homeLinks {
+    height: 85vh;
+    background-color: lightgreen;
+}
+
+.routerViews {
+    height: 85vh;
+    background-color:peru;
+}
+
+.eventViews {
+    height: 85vh;
+    background-color: royalblue;
+}
