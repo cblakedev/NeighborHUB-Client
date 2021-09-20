@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 
 type UserRegisterProps = {
-    token: (newToken: string) => void
+    updateToken: (newToken: string) => void
 }
 
 type UserRegisterState = {
@@ -44,7 +44,7 @@ class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
             })
         })
             .then((res) => res.json())
-            .then((data) => this.props.token(data.sessionToken))
+            .then((data) => this.props.updateToken(data.sessionToken))
     }
 
     handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {

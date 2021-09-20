@@ -1,6 +1,9 @@
+html {
+    background-color: grey;
+}
+
 .App {
     background-color: grey;
-    height: 100vh;
 }
 
 /* Auth Styles */
@@ -28,22 +31,119 @@
     }
 }
 
-/* Home Styles */
+/* Home Nav Styles */
 .headerBar {
     background-color: lightcoral;
 }
 
 .homeLinks {
     height: 85vh;
+    max-width: 200px !important;
     background-color: lightgreen;
+    margin: 10px !important;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-top: 15%;
+}
+
+.navItems li {
+    list-style: none;
+    font-size: 1.2rem;
+    padding: 4px;
+}
+
+.navItems a {
+    text-decoration: none;
+    color: mediumblue;
+}
+
+.navItems svg {
+    padding-bottom: 4px;
+    font-size: 1.5rem
+}
+
+.logoutBtnWrapper {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    margin-left: -50px !important;
 }
 
 .routerViews {
     height: 85vh;
+    overflow-y: scroll;
     background-color:peru;
+    margin: 10px !important;
+    border-radius: 8px;
 }
 
 .eventViews {
     height: 85vh;
     background-color: royalblue;
+    margin: 10px !important;
+    border-radius: 8px;
+}
+
+/* Feed Styles */
+.feedWrapper {
+    border-bottom: 1px solid #bbbbbb
+}
+
+.postBox {
+    border: 1px solid rgb(168, 168, 168);
+    background-color: white;
+    margin: 20px 0 !important;
+}
+
+.postBox:hover {
+    cursor: pointer;
+    background-color: rgb(233, 233, 233) !important;
+}
+
+.postBox p {
+    margin: 0 !important;
+    padding: 10px
+}
+
+.modal-footer {
+    border-top: none !important;
+}
+
+.modalFeedText {
+    height: 100px;
+}
+
+.feedposts {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid #adb5bd;
+    border-radius: .75rem;
+    margin: 20px 0 !important;
+}
+
+.postName {
+    border-bottom: 1px solid #adb5bd;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+}
+
+.postMenuCtrl {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.postName h4 {
+    margin-bottom: 0 !important;
+}
+
+.postBody {
+    margin: 10px 0 !important;
+}
+
+.postBody p {
+    margin: 0 !important;
 }

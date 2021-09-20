@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 type UserLoginProps = {
-    token: (newToken: string) => void
+    updateToken: (newToken: string) => void
 }
 
 type UserLoginState = {
@@ -37,7 +37,7 @@ class UserLogin extends Component<UserLoginProps, UserLoginState> {
             })
         })
             .then((res) => res.json())
-            .then((data) => this.props.token(data.sessionToken))
+            .then((data) => this.props.updateToken(data.sessionToken))
     }
 
     handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {

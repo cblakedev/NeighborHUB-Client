@@ -5,7 +5,7 @@ import AdminRegister from './AdminRegister';
 
 
 type AdminAuthProps = {
-    token: (newToken: string) => void
+    updateToken: (newToken: string) => void
 }
 
 type AdminAuthState = {
@@ -25,10 +25,10 @@ class AdminAuth extends Component<AdminAuthProps, AdminAuthState> {
                 <Row className='authWrapper'>
                     <Tabs id="authTab" defaultActiveKey="login">
                         <Tab eventKey='login' title='Login'>
-                            <AdminLogin token={this.props.token}/>
+                            <AdminLogin updateToken={this.props.updateToken}/>
                         </Tab>
                         <Tab eventKey='register' title='Register'>
-                            <AdminRegister token={this.props.token}/>
+                            <AdminRegister updateToken={this.props.updateToken}/>
                         </Tab>
                     </Tabs>
                 </Row>

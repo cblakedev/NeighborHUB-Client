@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 type UserAuthProps = {
-    token: (newToken: string) => void
+    updateToken: (newToken: string) => void
 }
 
 type UserAuthState = {
@@ -26,10 +26,10 @@ class UserAuth extends Component<UserAuthProps, UserAuthState> {
                 <Row className='authWrapper'>
                     <Tabs id="authTab" defaultActiveKey="login">
                         <Tab eventKey='login' title='Login'>
-                            <UserLogin token={this.props.token}/>
+                            <UserLogin updateToken={this.props.updateToken}/>
                         </Tab>
                         <Tab eventKey='register' title='Register'>
-                            <UserRegister token={this.props.token}/>
+                            <UserRegister updateToken={this.props.updateToken}/>
                         </Tab>
                     </Tabs>
                 </Row>

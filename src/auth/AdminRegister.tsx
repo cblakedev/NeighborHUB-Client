@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 
 type AdminRegisterProps = {
-    token: (newToken: string) => void
+    updateToken: (newToken: string) => void
 }
 
 type AdminRegisterState = {
@@ -41,7 +41,7 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
             })
         })
             .then((res) => res.json())
-            .then((data) => this.props.token(data.sessionToken))
+            .then((data) => this.props.updateToken(data.sessionToken))
     }
 
     handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {

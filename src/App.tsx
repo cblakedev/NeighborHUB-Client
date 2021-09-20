@@ -10,7 +10,7 @@ type AppProp = {
 }
 
 type AppState = {
-  sessionToken: string
+  sessionToken: string | null
 }
 
 class App extends Component<AppProp, AppState> {
@@ -20,8 +20,21 @@ class App extends Component<AppProp, AppState> {
       sessionToken: '',
     }
     this.updateToken = this.updateToken.bind(this)
+    this.clearToken = this.clearToken.bind(this)
   }
 
+  componentDidMount() {
+    if (localStorage.getItem('token')) {
+      this.setState({
+        sessionToken: localStorage.getItem('token')
+      })
+    }
+  }
+
+  clearToken = (): void => {
+    localStorage.clear()
+    this.setState({ sessionToken: '' })
+  }
 
   updateToken = (newToken: string) => {
     localStorage.setItem('token', newToken);
@@ -33,8 +46,7 @@ class App extends Component<AppProp, AppState> {
   render() {
     return (
       <div className="App">
-        {/* <UserAuth token={this.updateToken}/> */}
-          <Home />
+        {this.state.sessionToken === localStorage.getItem('token') ? <Home token={this.state.sessionToken} clearToken={this.clearToken} /> : <UserAuth updateToken={this.updateToken} />}
       </div>
     );
   }
