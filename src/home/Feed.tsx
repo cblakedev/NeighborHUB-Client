@@ -2,6 +2,7 @@ import React, { Component, VoidFunctionComponent } from 'react';
 import { Container, Row, Col, Modal, Button, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BsThreeDots } from 'react-icons/bs'
+import { MdClose } from 'react-icons/md'
 
 type FeedProps = {
     token: string | null
@@ -11,6 +12,7 @@ type FeedState = {
     modalShow: boolean
     post: string
     postData: PostsType | { [key: string]: undefined }
+    isPostMenuOpen: boolean
 }
 
 type PostsType = {
@@ -35,8 +37,10 @@ class Feed extends Component<FeedProps, FeedState> {
         this.state = {
             modalShow: false,
             post: '',
-            postData: {}
+            postData: {},
+            isPostMenuOpen: false
         }
+        this.postEditHandler = this.postEditHandler.bind(this)
     }
 
     handleClose = (): void => {
@@ -87,6 +91,11 @@ class Feed extends Component<FeedProps, FeedState> {
             })
     }
 
+    postEditHandler = (e: any):void => {
+        console.log('I was clicked!')
+       let postMenu: any = document.querySelector('.postMenu');
+       postMenu.classList.toggle('displayPostMenu')
+    }
 
     render() {
         return (
@@ -123,20 +132,27 @@ class Feed extends Component<FeedProps, FeedState> {
                     ?
                     this.state.postData.AllPosts.reverse().map((post, index) => {
                         return (
-                            <Row className='feedposts'>
+                            <Row key={post.id} className='feedposts'>
                                 <Col className='postName'>
-                                    <Row>
+                                    <Row className='postNameRow'>
                                         <Col>{post.AdminId ? <h4>Admin-{post.AdminId}</h4> : <h4>{post.User.FirstName}</h4>}</Col>
                                         {post.UserId && this.state.postData.userRole === 'Tenant'
                                             ? post.UserId === this.state.postData.userId
-                                                ? <Col className='postMenuCtrl'><BsThreeDots /></Col>
+                                                ? <Col onClick={(e)=> this.postEditHandler(e)} className='postMenuCtrl'><BsThreeDots /></Col>
                                                 : undefined
                                             : undefined}
-                                        {this.state.postData.userRole === 'Admin' ? <Col className='postMenuCtrl'><BsThreeDots /></Col> : undefined}
+                                        {this.state.postData.userRole === 'Admin' ? <Col onClick={()=> this.postEditHandler} className='postMenuCtrl'><BsThreeDots /></Col> : undefined}
+                                        <Col className='postMenu'> 
+                                            <Row className='postMenuOptions'>
+                                                <Col>Edit</Col>
+                                                <Col>Delete</Col>
+                                                <MdClose/>
+                                            </Row>
+                                        </Col>
                                     </Row>
                                 </Col>
                                 <Col className='postBody'>
-                                    <p key={post.id}>{post.Post}</p>
+                                    <p>{post.Post}</p>
                                 </Col>
                             </Row>
                         )

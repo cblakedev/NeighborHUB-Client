@@ -147,3 +147,38 @@ html {
 .postBody p {
     margin: 0 !important;
 }
+
+.postNameRow {
+    position: relative;
+}
+
+.postMenu {
+    position: absolute;
+    left: 100%;
+    margin-left: -100px;
+    width: 100px !important;
+    padding: 10px;
+    background-color: rgb(199, 198, 198);
+    border-radius: .50rem;
+    display: none;
+}
+
+.postMenuOptions {
+    position: relative;
+    display: flex;
+    flex-direction: column !important;
+}
+
+.postMenuOptions svg{
+    position: absolute;
+    position: absolute;
+    left: 100%;
+    margin-left: -36px;
+    width: 50px;
+    font-size: 1.3rem;
+    top: -8px;
+}
+
+.displayPostMenu {
+    display:block;
+}
