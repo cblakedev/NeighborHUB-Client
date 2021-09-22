@@ -160,7 +160,7 @@ html {
     padding: 10px;
     background-color: rgb(199, 198, 198);
     border-radius: .50rem;
-    display: none;
+    
 }
 
 .postMenuOptions {
@@ -179,6 +179,6 @@ html {
     top: -8px;
 }
 
-.displayPostMenu {
-    display:block;
+#postDropdown {
+    float: right;
 }

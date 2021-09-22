@@ -1,18 +1,20 @@
 import React, { Component, VoidFunctionComponent } from 'react';
-import { Container, Row, Col, Modal, Button, Form } from 'react-bootstrap';
+import { Container, Row, Col, Modal, Button, Form, Dropdown, DropdownButton } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BsThreeDots } from 'react-icons/bs'
-import { MdClose } from 'react-icons/md'
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+
 
 type FeedProps = {
     token: string | null
+
 }
 
 type FeedState = {
     modalShow: boolean
     post: string
     postData: PostsType | { [key: string]: undefined }
-    isPostMenuOpen: boolean
 }
 
 type PostsType = {
@@ -38,9 +40,7 @@ class Feed extends Component<FeedProps, FeedState> {
             modalShow: false,
             post: '',
             postData: {},
-            isPostMenuOpen: false
         }
-        this.postEditHandler = this.postEditHandler.bind(this)
     }
 
     handleClose = (): void => {
@@ -50,6 +50,8 @@ class Feed extends Component<FeedProps, FeedState> {
     handleShow = (e: React.MouseEvent): void => {
         this.setState({ modalShow: true })
     }
+
+
 
     handleFetch = (e: React.FormEvent<HTMLButtonElement>): void => {
         e.preventDefault();
@@ -91,11 +93,6 @@ class Feed extends Component<FeedProps, FeedState> {
             })
     }
 
-    postEditHandler = (e: any):void => {
-        console.log('I was clicked!')
-       let postMenu: any = document.querySelector('.postMenu');
-       postMenu.classList.toggle('displayPostMenu')
-    }
 
     render() {
         return (
@@ -130,7 +127,7 @@ class Feed extends Component<FeedProps, FeedState> {
                 </Modal>
                 {this.state.postData.AllPosts
                     ?
-                    this.state.postData.AllPosts.reverse().map((post, index) => {
+                    this.state.postData.AllPosts.reverse().map((post) => {
                         return (
                             <Row key={post.id} className='feedposts'>
                                 <Col className='postName'>
@@ -138,17 +135,31 @@ class Feed extends Component<FeedProps, FeedState> {
                                         <Col>{post.AdminId ? <h4>Admin-{post.AdminId}</h4> : <h4>{post.User.FirstName}</h4>}</Col>
                                         {post.UserId && this.state.postData.userRole === 'Tenant'
                                             ? post.UserId === this.state.postData.userId
-                                                ? <Col onClick={(e)=> this.postEditHandler(e)} className='postMenuCtrl'><BsThreeDots /></Col>
+                                                ?
+                                                <Col>
+                                                    <Dropdown>
+                                                        <Dropdown.Toggle id="postDropdown"></Dropdown.Toggle>
+                                                        <Dropdown.Menu>
+                                                            <Dropdown.Item href="#/action-1">Edit</Dropdown.Item>
+                                                            <Dropdown.Item href="#/action-2">Delete</Dropdown.Item>
+                                                        </Dropdown.Menu>
+                                                    </Dropdown>
+                                                </Col>
                                                 : undefined
                                             : undefined}
-                                        {this.state.postData.userRole === 'Admin' ? <Col onClick={()=> this.postEditHandler} className='postMenuCtrl'><BsThreeDots /></Col> : undefined}
-                                        <Col className='postMenu'> 
-                                            <Row className='postMenuOptions'>
-                                                <Col>Edit</Col>
-                                                <Col>Delete</Col>
-                                                <MdClose/>
-                                            </Row>
-                                        </Col>
+
+                                        {this.state.postData.userRole === 'Admin'
+                                            ?
+                                            <Col>
+                                                <Dropdown>
+                                                    <Dropdown.Toggle id="postDropdown"></Dropdown.Toggle>
+                                                    <Dropdown.Menu>
+                                                        <Dropdown.Item href="#/action-1">Edit</Dropdown.Item>
+                                                        <Dropdown.Item href="#/action-2">Delete</Dropdown.Item>
+                                                    </Dropdown.Menu>
+                                                </Dropdown>
+                                            </Col>
+                                            : undefined}
                                     </Row>
                                 </Col>
                                 <Col className='postBody'>
