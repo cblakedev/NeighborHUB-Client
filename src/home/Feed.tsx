@@ -1,9 +1,7 @@
-import React, { Component, VoidFunctionComponent } from 'react';
-import { Container, Row, Col, Modal, Button, Form, Dropdown, DropdownButton } from 'react-bootstrap';
+import React, { Component } from 'react';
+import { Container, Row, Col, Modal, Button, Form, Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BsThreeDots } from 'react-icons/bs'
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+
 
 
 type FeedProps = {
@@ -13,8 +11,11 @@ type FeedProps = {
 
 type FeedState = {
     modalShow: boolean
+    updateModalShow: boolean
     post: string
     postData: PostsType | { [key: string]: undefined }
+    selectedPost: any
+    currentPost: string
 }
 
 type PostsType = {
@@ -38,8 +39,11 @@ class Feed extends Component<FeedProps, FeedState> {
         super(props)
         this.state = {
             modalShow: false,
+            updateModalShow: false,
             post: '',
             postData: {},
+            selectedPost: {},
+            currentPost: ''
         }
     }
 
@@ -51,7 +55,14 @@ class Feed extends Component<FeedProps, FeedState> {
         this.setState({ modalShow: true })
     }
 
+    handleUpdateClose = (): void => {
+        this.setState({ updateModalShow: false })
+    }
 
+    handleUpdateShow = (e: React.MouseEvent): any => {
+        this.setState({ updateModalShow: true })
+
+    }
 
     handleFetch = (e: React.FormEvent<HTMLButtonElement>): void => {
         e.preventDefault();
@@ -69,10 +80,34 @@ class Feed extends Component<FeedProps, FeedState> {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data)
+
                 this.handleClose()
                 this.componentDidMount()
             })
+    }
+
+    handleUpdateFetch = (): any => {
+        
+
+        fetch(`http://localhost:5000/post/${this.state.selectedPost.id}`, {
+            method: 'PUT',
+            body: JSON.stringify({
+                feed: {
+                    Post: this.state.currentPost
+                }
+            }),
+            headers: new Headers({
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${this.props.token}`
+            })
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                this.componentDidMount()
+                this.handleUpdateClose()
+                console.log(data)
+            })
+        
     }
 
     componentDidMount() {
@@ -93,6 +128,13 @@ class Feed extends Component<FeedProps, FeedState> {
             })
     }
 
+    handleDelete = (): void => {
+
+    }
+
+    updateMenu = (): void => {
+
+    }
 
     render() {
         return (
@@ -140,26 +182,26 @@ class Feed extends Component<FeedProps, FeedState> {
                                                     <Dropdown>
                                                         <Dropdown.Toggle id="postDropdown"></Dropdown.Toggle>
                                                         <Dropdown.Menu>
-                                                            <Dropdown.Item href="#/action-1">Edit</Dropdown.Item>
-                                                            <Dropdown.Item href="#/action-2">Delete</Dropdown.Item>
+                                                            <Dropdown.Item onClick={(e) => { this.handleUpdateShow(e); this.setState({ selectedPost: post }) }}>Edit</Dropdown.Item>
+                                                            <Dropdown.Item>Delete</Dropdown.Item>
                                                         </Dropdown.Menu>
                                                     </Dropdown>
                                                 </Col>
                                                 : undefined
                                             : undefined}
 
-                                        {this.state.postData.userRole === 'Admin'
+                                        {/* {this.state.postData.userRole === 'Admin'
                                             ?
                                             <Col>
                                                 <Dropdown>
                                                     <Dropdown.Toggle id="postDropdown"></Dropdown.Toggle>
                                                     <Dropdown.Menu>
-                                                        <Dropdown.Item href="#/action-1">Edit</Dropdown.Item>
-                                                        <Dropdown.Item href="#/action-2">Delete</Dropdown.Item>
+                                                        <Dropdown.Item onClick={(e) => this.handleUpdateShow(e, post)}>Edit</Dropdown.Item>
+                                                        <Dropdown.Item>Delete</Dropdown.Item>
                                                     </Dropdown.Menu>
                                                 </Dropdown>
                                             </Col>
-                                            : undefined}
+                                            : undefined} */}
                                     </Row>
                                 </Col>
                                 <Col className='postBody'>
@@ -171,9 +213,32 @@ class Feed extends Component<FeedProps, FeedState> {
                     :
                     undefined}
 
+                <Modal show={this.state.updateModalShow} onHide={this.handleUpdateClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Edit Post</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form.Control
+                            className='modalFeedUpdate'
+                            as="textarea"
+                            value={this.state.currentPost}
+                            onChange={(e) => { this.setState({ currentPost: e.target.value }) }}
+                        />
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => this.handleUpdateClose()}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={(e) => this.handleUpdateFetch()}>
+                            Edit
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+
             </Container>
         )
     }
 }
+
 
 export default Feed
