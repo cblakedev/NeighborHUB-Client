@@ -1,30 +1,29 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Modal, Button, Form, Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-
+import DeletePost from './DeletePost'
 
 type FeedProps = {
     token: string | null
-
 }
 
 type FeedState = {
     modalShow: boolean
-    updateModalShow: boolean
     post: string
-    postData: PostsType | { [key: string]: undefined }
-    selectedPost: any
-    currentPost: string
+    postData: PostsType
+    changeCounter: number
+    updateModalShow: boolean
+    selectedPost: string
+    selectedPostId: number | undefined
 }
 
-type PostsType = {
+export interface PostsType {
     AllPosts: AllPostsType[]
     userId: number
     userRole: string
 }
 
-type AllPostsType = {
+export interface AllPostsType {
     AdminId: null | number
     Post: string
     User: { [key: string]: number | string }
@@ -39,12 +38,14 @@ class Feed extends Component<FeedProps, FeedState> {
         super(props)
         this.state = {
             modalShow: false,
-            updateModalShow: false,
             post: '',
-            postData: {},
-            selectedPost: {},
-            currentPost: ''
+            postData: {} as PostsType,
+            changeCounter: 0,
+            updateModalShow: false,
+            selectedPost: '',
+            selectedPostId: undefined,
         }
+        this.counterHandler = this.counterHandler.bind(this)
     }
 
     handleClose = (): void => {
@@ -60,8 +61,15 @@ class Feed extends Component<FeedProps, FeedState> {
     }
 
     handleUpdateShow = (e: React.MouseEvent): any => {
+        e.preventDefault()
         this.setState({ updateModalShow: true })
 
+    }
+
+    counterHandler = (number: number): void => {
+        this.setState({
+            changeCounter: this.state.changeCounter + number
+        })
     }
 
     handleFetch = (e: React.FormEvent<HTMLButtonElement>): void => {
@@ -80,20 +88,20 @@ class Feed extends Component<FeedProps, FeedState> {
         })
             .then((res) => res.json())
             .then((data) => {
-
                 this.handleClose()
                 this.componentDidMount()
+                this.setState({
+                    post: ''
+                })
             })
     }
 
-    handleUpdateFetch = (): any => {
-        
-
-        fetch(`http://localhost:5000/post/${this.state.selectedPost.id}`, {
+    handleUpdateFetch = (e: React.MouseEvent): any => {
+        fetch(`http://localhost:5000/post/${this.state.selectedPostId}`, {
             method: 'PUT',
             body: JSON.stringify({
                 feed: {
-                    Post: this.state.currentPost
+                    Post: this.state.selectedPost
                 }
             }),
             headers: new Headers({
@@ -103,14 +111,13 @@ class Feed extends Component<FeedProps, FeedState> {
         })
             .then((res) => res.json())
             .then((data) => {
-                this.componentDidMount()
+                this.counterHandler(1)
                 this.handleUpdateClose()
                 console.log(data)
             })
-        
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         fetch('http://localhost:5000/post/allposts', {
             method: 'GET',
             headers: new Headers({
@@ -120,21 +127,38 @@ class Feed extends Component<FeedProps, FeedState> {
         })
             .then((res) => res.json())
             .then((data) => {
+                data.AllPosts.sort(function (a: AllPostsType, b: AllPostsType): number {
+                    return b.createdAt.localeCompare(a.createdAt);
+                })
                 this.setState({
                     postData: data
                 })
-
                 console.log(data)
             })
     }
 
-    handleDelete = (): void => {
-
+    componentDidUpdate(prevProps: FeedProps, prevState: FeedState) {
+        if (prevState.changeCounter !== this.state.changeCounter) {
+            fetch('http://localhost:5000/post/allposts', {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${this.props.token}`
+                })
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    data.AllPosts.sort(function (a: AllPostsType, b: AllPostsType): number {
+                        return b.createdAt.localeCompare(a.createdAt);
+                    })
+                    this.setState({
+                        postData: data
+                    })
+                    console.log(data)
+                })
+        }
     }
 
-    updateMenu = (): void => {
-
-    }
 
     render() {
         return (
@@ -167,9 +191,10 @@ class Feed extends Component<FeedProps, FeedState> {
                         </Button>
                     </Modal.Footer>
                 </Modal>
+
                 {this.state.postData.AllPosts
                     ?
-                    this.state.postData.AllPosts.reverse().map((post) => {
+                    this.state.postData.AllPosts.map((post) => {
                         return (
                             <Row key={post.id} className='feedposts'>
                                 <Col className='postName'>
@@ -182,26 +207,26 @@ class Feed extends Component<FeedProps, FeedState> {
                                                     <Dropdown>
                                                         <Dropdown.Toggle id="postDropdown"></Dropdown.Toggle>
                                                         <Dropdown.Menu>
-                                                            <Dropdown.Item onClick={(e) => { this.handleUpdateShow(e); this.setState({ selectedPost: post }) }}>Edit</Dropdown.Item>
-                                                            <Dropdown.Item>Delete</Dropdown.Item>
+                                                            <Dropdown.Item onClick={(e) => { this.handleUpdateShow(e); this.setState({ selectedPostId: post.id, selectedPost: post.Post }) }}>Edit</Dropdown.Item>
+                                                            <Dropdown.Item><DeletePost token={this.props.token} post={post} counterHandler={this.counterHandler} /></Dropdown.Item>
                                                         </Dropdown.Menu>
                                                     </Dropdown>
                                                 </Col>
                                                 : undefined
                                             : undefined}
 
-                                        {/* {this.state.postData.userRole === 'Admin'
+                                        {this.state.postData.userRole === 'Admin'
                                             ?
                                             <Col>
                                                 <Dropdown>
                                                     <Dropdown.Toggle id="postDropdown"></Dropdown.Toggle>
                                                     <Dropdown.Menu>
-                                                        <Dropdown.Item onClick={(e) => this.handleUpdateShow(e, post)}>Edit</Dropdown.Item>
-                                                        <Dropdown.Item>Delete</Dropdown.Item>
+                                                        <Dropdown.Item onClick={(e) => { this.handleUpdateShow(e); this.setState({ selectedPostId: post.id, selectedPost: post.Post }) }}>Edit</Dropdown.Item>
+                                                        <Dropdown.Item><DeletePost token={this.props.token} post={post} counterHandler={this.counterHandler} /></Dropdown.Item>
                                                     </Dropdown.Menu>
                                                 </Dropdown>
                                             </Col>
-                                            : undefined} */}
+                                            : undefined}
                                     </Row>
                                 </Col>
                                 <Col className='postBody'>
@@ -219,17 +244,17 @@ class Feed extends Component<FeedProps, FeedState> {
                     </Modal.Header>
                     <Modal.Body>
                         <Form.Control
-                            className='modalFeedUpdate'
+                            className='modalFeedText'
                             as="textarea"
-                            value={this.state.currentPost}
-                            onChange={(e) => { this.setState({ currentPost: e.target.value }) }}
+                            value={this.state.selectedPost}
+                            onChange={(e) => this.setState({ selectedPost: e.target.value })}
                         />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={() => this.handleUpdateClose()}>
                             Close
                         </Button>
-                        <Button variant="primary" onClick={(e) => this.handleUpdateFetch()}>
+                        <Button variant="primary" onClick={(e) => this.handleUpdateFetch(e)}>
                             Edit
                         </Button>
                     </Modal.Footer>
@@ -239,6 +264,5 @@ class Feed extends Component<FeedProps, FeedState> {
         )
     }
 }
-
 
 export default Feed
