@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Form, Button, Modal, FloatingLabel } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Modal, Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { UserType } from '../App'
 
 type TicketsProps = {
     token: string | null
@@ -11,7 +12,26 @@ type TicketsState = {
     validated: boolean
     ticketTitle: string
     ticketDescription: string
+    ticketData: ExistingTicket[]
+    updateModalShow: boolean
+    selectedTicketTitle: string
+    selectedTicketDescription: string
+    selectedTicketId: number | undefined
 }
+
+type ExistingTicket = {
+    AdminId: number | null
+    TicketPost: string
+    TicketTitle: string
+    User: UserType
+    UserId: number
+    createdAt: string
+    id: number
+    isResolved: null | boolean
+    resolving: null | boolean
+    updatedAt: string
+}
+
 
 class Tickets extends Component<TicketsProps, TicketsState> {
     constructor(props: TicketsProps) {
@@ -20,7 +40,12 @@ class Tickets extends Component<TicketsProps, TicketsState> {
             showModal: false,
             validated: false,
             ticketTitle: '',
-            ticketDescription: ''
+            ticketDescription: '',
+            ticketData: [],
+            updateModalShow: false,
+            selectedTicketTitle: '',
+            selectedTicketDescription: '',
+            selectedTicketId: undefined
         }
     }
 
@@ -38,6 +63,15 @@ class Tickets extends Component<TicketsProps, TicketsState> {
         })
     }
 
+    handleUpdateClose = (): void => {
+        this.setState({ updateModalShow: false })
+    }
+
+    handleUpdateShow = (e: React.MouseEvent): any => {
+        e.preventDefault()
+        this.setState({ updateModalShow: true })
+    }
+
     handleCreate = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
         const form = e.currentTarget;
@@ -49,6 +83,7 @@ class Tickets extends Component<TicketsProps, TicketsState> {
         this.setState({ validated: true });
         this.handleFetch()
     }
+
 
     handleFetch = (): void => {
         if (this.state.ticketTitle && this.state.ticketDescription) {
@@ -73,8 +108,62 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                         ticketTitle: '',
                         ticketDescription: ''
                     })
+                    this.componentDidMount();
                 })
         }
+    }
+
+    updateTicket = (e: React.FormEvent<HTMLFormElement>): void => {
+        e.preventDefault();
+
+        if (this.state.selectedTicketTitle && this.state.selectedTicketDescription) {
+            fetch(`http://localhost:5000/ticket/updateticket/${this.state.selectedTicketId}`, {
+                method: 'PUT',
+                body: JSON.stringify({
+                    ticket: {
+                        TicketTitle: this.state.selectedTicketTitle,
+                        TicketPost: this.state.selectedTicketDescription
+                    }
+                }),
+                headers: new Headers({
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${this.props.token}`
+                })
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data)
+                    this.setState({
+                        selectedTicketTitle: '',
+                        selectedTicketDescription: ''
+                    })
+                    this.handleUpdateClose()
+                })
+        }
+
+    }
+
+    componentDidMount(): void {
+        fetch(`http://localhost:5000/ticket/mytickets`, {
+            method: 'GET',
+            headers: new Headers({
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${this.props.token}`
+            })
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                data.myTickets.sort(function (a: ExistingTicket, b: ExistingTicket): number {
+                    return b.createdAt.localeCompare(a.createdAt);
+                })
+
+                this.setState({
+                    ticketData: data.myTickets
+                })
+                console.log(data.myTickets)
+            })
+
+
     }
 
 
@@ -83,7 +172,7 @@ class Tickets extends Component<TicketsProps, TicketsState> {
             <Container className='mainFeedWrapper'>
                 <Row className='feedWrapper'>
                     <Col>
-                        <h1>Tickets</h1>
+                        <h2>Tickets</h2>
                     </Col>
                     <Col>
                         <Button className='createTicketBtn mt-2' variant='primary' onClick={this.handleShow}>
@@ -127,13 +216,81 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                         </Modal>
                     </Col>
                 </Row>
-                <Row>
-                    <Col>
+                {this.state.ticketData
+                    ?
+                    this.state.ticketData.map((ticket) => {
+                        return (
+                            <Row key={ticket.id} className='ticketWrapper'>
+                                <Col>
+                                    <Row className='ticketTitleWrapper'>
+                                        <Col className='ticketTitleCol'>
+                                            <h4 >{ticket.TicketTitle}</h4>
+                                        </Col>
+                                        <Col className='ticketDropdownCol'>
+                                            <Dropdown>
+                                                <Dropdown.Toggle id="postDropdown"></Dropdown.Toggle>
+                                                <Dropdown.Menu>
+                                                    <Dropdown.Item onClick={(e) => {
+                                                        this.handleUpdateShow(e);
+                                                        this.setState({
+                                                            selectedTicketTitle: ticket.TicketTitle,
+                                                            selectedTicketDescription: ticket.TicketPost,
+                                                            selectedTicketId: ticket.id
+                                                        })
+                                                    }}>
+                                                        Edit
+                                                    </Dropdown.Item>
+                                                    <Dropdown.Item>Delete</Dropdown.Item>
+                                                </Dropdown.Menu>
+                                            </Dropdown>
+                                        </Col>
+                                    </Row>
+                                    <Row className='ticketPostWrapper'>
+                                        <Col>
+                                            <p>{ticket.TicketPost}</p>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row >
+                        )
+                    })
+                    : undefined
+                }
+                <Modal show={this.state.updateModalShow} onHide={this.handleUpdateClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Edit Ticket</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form onSubmit={(e) => this.updateTicket(e)}>
+                            <Form.Group as={Col} md='12'>
+                                <Form.Control
+                                    className='modalTitleText'
+                                    value={this.state.selectedTicketTitle}
+                                    onChange={(e) => this.setState({ selectedTicketTitle: e.target.value })}
+                                />
+                            </Form.Group>
+                            <Form.Group className='mt-3' as={Col} md='12'>
+                                <Form.Control
+                                    className='modalTicketText'
+                                    as="textarea"
+                                    value={this.state.selectedTicketDescription}
+                                    onChange={(e) => this.setState({ selectedTicketDescription: e.target.value })}
+                                />
+                            </Form.Group>
 
-                        
-
-                    </Col>
-                </Row >
+                            {this.state.selectedTicketDescription && this.state.selectedTicketDescription
+                                ?
+                                <Button className='mt-3' variant="primary" type='submit'>
+                                    Edit
+                                </Button>
+                                :
+                                <Button className='mt-3' variant="primary" type='submit' disabled>
+                                    Edit
+                                </Button>
+                            }
+                        </Form>
+                    </Modal.Body>
+                </Modal>
             </Container >
         )
     }

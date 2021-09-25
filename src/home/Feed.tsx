@@ -216,11 +216,11 @@ class Feed extends Component<FeedProps, FeedState> {
                             <Row key={post.id} className='feedposts'>
                                 <Col className='postName'>
                                     <Row className='postNameRow'>
-                                        <Col>{post.AdminId ? <h4>Admin-{post.AdminId}</h4> : <h4>{post.User.FirstName}</h4>}</Col>
+                                        <Col className='postNameCol'>{post.AdminId ? <h4>Admin-{post.AdminId}</h4> : <h4>{post.User.FirstName}</h4>}</Col>
                                         {post.UserId && this.state.postData.userRole === 'Tenant'
                                             ? post.UserId === this.state.postData.userId
                                                 ?
-                                                <Col>
+                                                <Col className='postDropdownCol'>
                                                     <Dropdown>
                                                         <Dropdown.Toggle id="postDropdown"></Dropdown.Toggle>
                                                         <Dropdown.Menu>
@@ -266,9 +266,17 @@ class Feed extends Component<FeedProps, FeedState> {
                             value={this.state.selectedPost}
                             onChange={(e) => this.setState({ selectedPost: e.target.value })}
                         />
-                        <Button className='mt-3' variant="primary" onClick={(e) => this.handleUpdateFetch(e)}>
-                            Edit
-                        </Button>
+                        { this.state.selectedPost
+                            ?
+                            <Button className='mt-3' variant="primary" onClick={(e) => this.handleUpdateFetch(e)}>
+                                Edit
+                            </Button>
+                            :
+                            <Button className='mt-3' variant="primary" disabled>
+                                Edit
+                            </Button>
+                        }
+
                     </Modal.Body>
                 </Modal>
 

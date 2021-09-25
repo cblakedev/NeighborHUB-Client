@@ -13,6 +13,18 @@ type AppState = {
   sessionToken: string | null
 }
 
+export interface UserType {
+  id: number
+  Email: string 
+  Password: string
+  FirstName: string
+  LastName: string
+  UnitNumber?: string
+  Role: string
+  createdAt: string
+  updatedAt: string
+}
+
 class App extends Component<AppProp, AppState> {
   constructor(props: AppProp) {
     super(props)
@@ -36,10 +48,10 @@ class App extends Component<AppProp, AppState> {
     this.setState({ sessionToken: '' })
   }
 
-  updateToken = (newToken: string) => {
+  updateToken = (newToken: string): void => {
     localStorage.setItem('token', newToken);
     this.setState({
-      sessionToken: newToken
+      sessionToken: newToken,
     });
   }
 
