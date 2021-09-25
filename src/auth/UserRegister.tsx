@@ -28,23 +28,35 @@ class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
     }
 
     handleFetch = (): void => {
-        fetch('http://localhost:5000/user/register', {
-            method: 'POST',
-            body: JSON.stringify({
-                user: {
-                    Email: this.state.email,
-                    Password: this.state.password,
-                    FirstName: this.state.firstName,
-                    LastName: this.state.lastName,
-                    UnitNumber: this.state.unitNumber
-                }
-            }),
-            headers: new Headers({
-                'Content-Type': 'application/json',
+        const { email, password, firstName, lastName, unitNumber } = this.state
+        if (email && password && firstName && lastName && unitNumber) {
+            fetch('http://localhost:5000/user/register', {
+                method: 'POST',
+                body: JSON.stringify({
+                    user: {
+                        Email: this.state.email,
+                        Password: this.state.password,
+                        FirstName: this.state.firstName,
+                        LastName: this.state.lastName,
+                        UnitNumber: this.state.unitNumber
+                    }
+                }),
+                headers: new Headers({
+                    'Content-Type': 'application/json',
+                })
             })
-        })
-            .then((res) => res.json())
-            .then((data) => this.props.updateToken(data.sessionToken))
+                .then((res) => res.json())
+                .then((data) => {
+                    this.props.updateToken(data.sessionToken)
+                    this.setState({
+                        email: '',
+                        password: '',
+                        firstName: '',
+                        lastName: '',
+                        unitNumber: ''
+                    })
+                })
+        }
     }
 
     handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {

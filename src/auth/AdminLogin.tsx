@@ -22,20 +22,28 @@ class AdminLogin extends Component<AdminLoginProps, AdminLoginState> {
     }
 
     handleFetch = (): void => {
-        fetch('http://localhost:5000/admin/login', {
-            method: 'POST',
-            body: JSON.stringify({
-                admin: {
-                    Email: this.state.email,
-                    Password: this.state.password
-                }
-            }),
-            headers: new Headers({
-                'Content-Type': 'application/json',
+        if (this.state.email && this.state.password) {
+            fetch('http://localhost:5000/admin/login', {
+                method: 'POST',
+                body: JSON.stringify({
+                    admin: {
+                        Email: this.state.email,
+                        Password: this.state.password
+                    }
+                }),
+                headers: new Headers({
+                    'Content-Type': 'application/json',
+                })
             })
-        })
-            .then((res) => res.json())
-            .then((data) => this.props.updateToken(data.sessionToken))
+                .then((res) => res.json())
+                .then((data) => {
+                    this.props.updateToken(data.sessionToken)
+                    this.setState({
+                        email: '',
+                        password: ''
+                    })
+                })
+        }
     }
 
     handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {

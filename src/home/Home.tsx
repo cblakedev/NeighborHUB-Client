@@ -53,7 +53,7 @@ class Home extends Component<HomeProps, HomeState> {
                             <Col className='routerViews' sm={6}>
                                 <Switch>
                                     <Route exact path='/'><Feed token={this.props.token}/></Route>
-                                    <Route exact path='/tickets'><Tickets /></Route>
+                                    <Route exact path='/tickets'><Tickets token={this.props.token}/></Route>
                                     <Route exact path='/events'><Events /></Route>
                                 </Switch>
                             </Col>

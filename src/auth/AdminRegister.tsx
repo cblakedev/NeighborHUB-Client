@@ -26,22 +26,34 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
     }
 
     handleFetch = (): void => {
-        fetch('http://localhost:5000/admin/register', {
-            method: 'POST',
-            body: JSON.stringify({
-                admin: {
-                    Email: this.state.email,
-                    Password: this.state.password,
-                    FirstName: this.state.firstName,
-                    LastName: this.state.lastName
-                }
-            }),
-            headers: new Headers({
-                'Content-Type': 'application/json',
+        const { email, password, firstName, lastName } = this.state
+        
+        if (email && password && firstName && lastName) {
+            fetch('http://localhost:5000/admin/register', {
+                method: 'POST',
+                body: JSON.stringify({
+                    admin: {
+                        Email: this.state.email,
+                        Password: this.state.password,
+                        FirstName: this.state.firstName,
+                        LastName: this.state.lastName
+                    }
+                }),
+                headers: new Headers({
+                    'Content-Type': 'application/json',
+                })
             })
-        })
-            .then((res) => res.json())
-            .then((data) => this.props.updateToken(data.sessionToken))
+                .then((res) => res.json())
+                .then((data) => {
+                    this.props.updateToken(data.sessionToken)
+                    this.setState({
+                        email: '',
+                        password: '',
+                        firstName: '',
+                        lastName: '',
+                    })
+                })
+        }
     }
 
     handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {

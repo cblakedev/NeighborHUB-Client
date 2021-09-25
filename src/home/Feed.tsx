@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Modal, Button, Form, Dropdown } from 'react-bootstrap';
+import { Container, Row, Col, Modal, Button, Form, Dropdown, FormGroup } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DeletePost from './DeletePost'
 
@@ -9,6 +9,7 @@ type FeedProps = {
 
 type FeedState = {
     modalShow: boolean
+    validated: boolean
     post: string
     postData: PostsType
     changeCounter: number
@@ -38,6 +39,7 @@ class Feed extends Component<FeedProps, FeedState> {
         super(props)
         this.state = {
             modalShow: false,
+            validated: false,
             post: '',
             postData: {} as PostsType,
             changeCounter: 0,
@@ -72,28 +74,42 @@ class Feed extends Component<FeedProps, FeedState> {
         })
     }
 
-    handleFetch = (e: React.FormEvent<HTMLButtonElement>): void => {
+    handleCreate = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        fetch('http://localhost:5000/post/create', {
-            method: 'POST',
-            body: JSON.stringify({
-                feed: {
-                    Post: this.state.post
-                }
-            }),
-            headers: new Headers({
-                'Content-type': 'application/json',
-                'Authorization': `Bearer ${this.props.token}`
-            })
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                this.handleClose()
-                this.componentDidMount()
-                this.setState({
-                    post: ''
+        const form = e.currentTarget;
+        if (form.checkValidity() === false) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        this.setState({ validated: true });
+        this.handleFetch()
+    }
+
+    handleFetch = (): void => {
+        if (this.state.post) {
+            fetch('http://localhost:5000/post/create', {
+                method: 'POST',
+                body: JSON.stringify({
+                    feed: {
+                        Post: this.state.post
+                    }
+                }),
+                headers: new Headers({
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${this.props.token}`
                 })
             })
+                .then((res) => res.json())
+                .then((data) => {
+                    this.handleClose()
+                    this.componentDidMount()
+                    this.setState({
+                        post: ''
+                    })
+                })
+        }
+
     }
 
     handleUpdateFetch = (e: React.MouseEvent): any => {
@@ -159,7 +175,6 @@ class Feed extends Component<FeedProps, FeedState> {
         }
     }
 
-
     render() {
         return (
             <Container className='mainFeedWrapper'>
@@ -174,22 +189,24 @@ class Feed extends Component<FeedProps, FeedState> {
                         <Modal.Title>Create a post</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Form.Control
-                            className='modalFeedText'
-                            as="textarea"
-                            placeholder="What do you want to talk about"
-                            value={this.state.post}
-                            onChange={(e) => this.setState({ post: e.target.value })}
-                        />
+                        <Form noValidate validated={this.state.validated} onSubmit={(e) => this.handleCreate(e)}>
+                            <Form.Group controlId='postfeedcontrol'>
+                                <Form.Control
+                                    required
+                                    className='modalFeedText'
+                                    as="textarea"
+                                    placeholder="What do you want to talk about"
+                                    value={this.state.post}
+                                    onChange={(e) => this.setState({ post: e.target.value })}
+                                />
+                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                <Form.Control.Feedback type='invalid'>Post text required.</Form.Control.Feedback>
+                            </Form.Group>
+                            <Button variant="primary" className='mt-3' type='submit'>
+                                Post
+                            </Button>
+                        </Form>
                     </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={() => this.handleClose()}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={(e) => this.handleFetch(e)}>
-                            Post
-                        </Button>
-                    </Modal.Footer>
                 </Modal>
 
                 {this.state.postData.AllPosts
@@ -249,15 +266,10 @@ class Feed extends Component<FeedProps, FeedState> {
                             value={this.state.selectedPost}
                             onChange={(e) => this.setState({ selectedPost: e.target.value })}
                         />
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={() => this.handleUpdateClose()}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={(e) => this.handleUpdateFetch(e)}>
+                        <Button className='mt-3' variant="primary" onClick={(e) => this.handleUpdateFetch(e)}>
                             Edit
                         </Button>
-                    </Modal.Footer>
+                    </Modal.Body>
                 </Modal>
 
             </Container>
