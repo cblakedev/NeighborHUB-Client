@@ -11,6 +11,7 @@ type AppProp = {
 
 type AppState = {
   sessionToken: string | null
+  userRole: string | null
 }
 
 export interface UserType {
@@ -30,35 +31,43 @@ class App extends Component<AppProp, AppState> {
     super(props)
     this.state = {
       sessionToken: '',
+      userRole: ''
+
     }
     this.updateToken = this.updateToken.bind(this)
     this.clearToken = this.clearToken.bind(this)
   }
 
   componentDidMount() {
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem('token') && localStorage.getItem('role')) {
       this.setState({
-        sessionToken: localStorage.getItem('token')
+        sessionToken: localStorage.getItem('token'),
+        userRole: localStorage.getItem('role')
       })
     }
   }
 
   clearToken = (): void => {
     localStorage.clear()
-    this.setState({ sessionToken: '' })
+    this.setState({ 
+      sessionToken: '',
+      userRole: ''
+    })
   }
 
-  updateToken = (newToken: string): void => {
+  updateToken = (newToken: string, newRole: string): void => {
     localStorage.setItem('token', newToken);
+    localStorage.setItem('role', newRole)
     this.setState({
       sessionToken: newToken,
+      userRole: newRole
     });
   }
 
   render() {
     return (
       <div className="App">
-        {this.state.sessionToken === localStorage.getItem('token') ? <Home token={this.state.sessionToken} clearToken={this.clearToken} /> : <UserAuth updateToken={this.updateToken} />}
+        {this.state.sessionToken === localStorage.getItem('token') ? <Home token={this.state.sessionToken} role={this.state.userRole} clearToken={this.clearToken} /> : <AdminAuth updateToken={this.updateToken} />}
       </div>
     );
   }

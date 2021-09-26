@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 
 type AdminRegisterProps = {
-    updateToken: (newToken: string) => void
+    updateToken: (newToken: string, role: string) => void
 }
 
 type AdminRegisterState = {
@@ -45,7 +45,7 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    this.props.updateToken(data.sessionToken)
+                    this.props.updateToken(data.sessionToken, data.user.Role)
                     this.setState({
                         email: '',
                         password: '',

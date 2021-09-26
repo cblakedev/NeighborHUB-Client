@@ -4,7 +4,7 @@ import { AllPostsType } from './Feed'
 type DeletePostProps = {
     post: AllPostsType
     token: string | null
-    counterHandler: (number: number) => void
+    handleChangeCounter: () => void
 }
 
 type DeletePostState = {
@@ -28,7 +28,7 @@ class DeletePost extends Component<DeletePostProps, DeletePostState> {
         })
             .then((res) => res.json())
             .then((data) => {
-                this.props.counterHandler(1)
+                this.props.handleChangeCounter()
                 console.log(data)
             })
     }

@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 type UserAuthProps = {
-    updateToken: (newToken: string) => void
+    updateToken: (newToken: string, role: string) => void
 }
 
 type UserAuthState = {

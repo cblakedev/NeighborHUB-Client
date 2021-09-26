@@ -116,28 +116,15 @@ html {
 }
 
 .feedposts {
-    display: flex;
-    flex-direction: column;
     background-color: white;
     border: 1px solid #adb5bd;
     border-radius: .75rem;
     margin: 20px 0 !important;
 }
 
-.postName {
-    border-bottom: 1px solid #adb5bd;
-    padding-top: 5px !important;
-    padding-bottom: 5px !important;
-    margin: 0 12px !important;
-    width: inherit !important;
-}
-
-.postNameCol {
-    padding-left: 0 !important;
-}
-
-.postDropdownCol {
-    padding-right: 0 !important;
+.postNameCol h4 {
+    margin: 0 !important;
+    padding: 5px 0 !important;
 }
 
 .postMenuCtrl {
@@ -146,20 +133,10 @@ html {
     justify-content: flex-end;
 }
 
-.postName h4 {
-    margin-bottom: 0 !important;
-}
-
-.postBody {
-    margin: 10px 0 !important;
-}
-
 .postBody p {
     margin: 0 !important;
-}
-
-.postNameRow {
-    position: relative;
+    border-top: 1px solid #adb5bd;
+    padding: 10px 0;
 }
 
 .postMenu {
@@ -191,6 +168,8 @@ html {
 
 #postDropdown {
     float: right;
+    font-size: .75rem;
+    margin: 5px 0;
 }
 
 /* Ticket Styles */
@@ -205,17 +184,13 @@ html {
     margin: 20px 0 !important;
 }
 
-
-.ticketTitleWrapper{
-    border-bottom: 1px solid #adb5bd;
-    margin: 0 .5px !important;
+.ticketTitleCol h4 {
+    margin: 0 !important;
     padding: 5px 0 !important;
 }
 
-.ticketTitleCol {
-    padding-left: 0 !important;
-}
-
-.ticketDropdownCol {
-    padding-right: 0 !important;
+.ticketPostWrapper p{
+    margin: 0 !important;
+    border-top: 1px solid #adb5bd;
+    padding: 10px 0;
 }

@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import { Container, Row, Col, Form, Button, Modal, Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { UserType } from '../App'
+import DeleteTicket from './DeleteTicket'
+import { NonNullExpression } from 'typescript';
 
 type TicketsProps = {
     token: string | null
+    role: string | null
 }
 
 type TicketsState = {
@@ -17,6 +20,7 @@ type TicketsState = {
     selectedTicketTitle: string
     selectedTicketDescription: string
     selectedTicketId: number | undefined
+    changeCounter: number
 }
 
 type ExistingTicket = {
@@ -45,8 +49,10 @@ class Tickets extends Component<TicketsProps, TicketsState> {
             updateModalShow: false,
             selectedTicketTitle: '',
             selectedTicketDescription: '',
-            selectedTicketId: undefined
+            selectedTicketId: undefined,
+            changeCounter: 1
         }
+        this.handleChangeCounter = this.handleChangeCounter.bind(this)
     }
 
     handleClose = (): void => {
@@ -84,6 +90,11 @@ class Tickets extends Component<TicketsProps, TicketsState> {
         this.handleFetch()
     }
 
+    handleChangeCounter = (): void => {
+        this.setState({
+            changeCounter: this.state.changeCounter + 1
+        })
+    }
 
     handleFetch = (): void => {
         if (this.state.ticketTitle && this.state.ticketDescription) {
@@ -108,14 +119,14 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                         ticketTitle: '',
                         ticketDescription: ''
                     })
-                    this.componentDidMount();
+                    this.handleChangeCounter()
                 })
         }
     }
 
     updateTicket = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-
+        ////Start conditional operator here if an admin is updating info
         if (this.state.selectedTicketTitle && this.state.selectedTicketDescription) {
             fetch(`http://localhost:5000/ticket/updateticket/${this.state.selectedTicketId}`, {
                 method: 'PUT',
@@ -138,13 +149,15 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                         selectedTicketDescription: ''
                     })
                     this.handleUpdateClose()
+                    this.handleChangeCounter()
                 })
         }
 
     }
 
     componentDidMount(): void {
-        fetch(`http://localhost:5000/ticket/mytickets`, {
+        if(this.props.role === 'Tenant') {
+            fetch(`http://localhost:5000/ticket/mytickets`, {
             method: 'GET',
             headers: new Headers({
                 'Content-type': 'application/json',
@@ -162,10 +175,50 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                 })
                 console.log(data.myTickets)
             })
-
-
+        } else if (this.props.role === 'Admin') {
+            fetch(`http://localhost:5000/ticket/admin/alltickets`, {
+            method: 'GET',
+            headers: new Headers({
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${this.props.token}`
+            })
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                data.allTickets.sort(function (a: ExistingTicket, b: ExistingTicket): number {
+                    return b.createdAt.localeCompare(a.createdAt);
+                })
+                this.setState({
+                    ticketData: data.allTickets
+                })
+                console.log(data)
+            })
+        }
+        
     }
 
+    componentDidUpdate(prevProps: TicketsProps, prevState: TicketsState): void {
+        if (prevState.changeCounter !== this.state.changeCounter) {
+            fetch(`http://localhost:5000/ticket/mytickets`, {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${this.props.token}`
+                })
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    data.myTickets.sort(function (a: ExistingTicket, b: ExistingTicket): number {
+                        return b.createdAt.localeCompare(a.createdAt);
+                    })
+
+                    this.setState({
+                        ticketData: data.myTickets
+                    })
+                    console.log(data.myTickets)
+                })
+        }
+    }
 
     render() {
         return (
@@ -222,7 +275,7 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                         return (
                             <Row key={ticket.id} className='ticketWrapper'>
                                 <Col>
-                                    <Row className='ticketTitleWrapper'>
+                                    <Row>
                                         <Col className='ticketTitleCol'>
                                             <h4 >{ticket.TicketTitle}</h4>
                                         </Col>
@@ -240,7 +293,7 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                                                     }}>
                                                         Edit
                                                     </Dropdown.Item>
-                                                    <Dropdown.Item>Delete</Dropdown.Item>
+                                                    <Dropdown.Item><DeleteTicket token={this.props.token} ticketId={ticket.id} handleChangeCounter={this.handleChangeCounter}/></Dropdown.Item>
                                                 </Dropdown.Menu>
                                             </Dropdown>
                                         </Col>

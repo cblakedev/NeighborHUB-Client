@@ -12,6 +12,7 @@ import Tickets from '../tickets/Tickets'
 type HomeProps = {
     token: string | null
     clearToken: () => void
+    role: string | null
 }
 
 type HomeState = {
@@ -53,7 +54,7 @@ class Home extends Component<HomeProps, HomeState> {
                             <Col className='routerViews' sm={6}>
                                 <Switch>
                                     <Route exact path='/'><Feed token={this.props.token}/></Route>
-                                    <Route exact path='/tickets'><Tickets token={this.props.token}/></Route>
+                                    <Route exact path='/tickets'><Tickets token={this.props.token} role={this.props.role}/></Route>
                                     <Route exact path='/events'><Events /></Route>
                                 </Switch>
                             </Col>

@@ -5,7 +5,7 @@ import AdminRegister from './AdminRegister';
 
 
 type AdminAuthProps = {
-    updateToken: (newToken: string) => void
+    updateToken: (newToken: string, role: string) => void
 }
 
 type AdminAuthState = {

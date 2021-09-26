@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 type UserLoginProps = {
-    updateToken: (newToken: string) => void
+    updateToken: (newToken: string, role: string) => void
 }
 
 type UserLoginState = {
@@ -39,7 +39,7 @@ class UserLogin extends Component<UserLoginProps, UserLoginState> {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    this.props.updateToken(data.sessionToken)
+                    this.props.updateToken(data.sessionToken, data.user.Role)
                     this.setState({
                         email: '',
                         password: ''

@@ -47,7 +47,7 @@ class Feed extends Component<FeedProps, FeedState> {
             selectedPost: '',
             selectedPostId: undefined,
         }
-        this.counterHandler = this.counterHandler.bind(this)
+        this.handleChangeCounter = this.handleChangeCounter.bind(this)
     }
 
     handleClose = (): void => {
@@ -68,9 +68,9 @@ class Feed extends Component<FeedProps, FeedState> {
 
     }
 
-    counterHandler = (number: number): void => {
+    handleChangeCounter = (): void => {
         this.setState({
-            changeCounter: this.state.changeCounter + number
+            changeCounter: this.state.changeCounter + 1
         })
     }
 
@@ -103,7 +103,7 @@ class Feed extends Component<FeedProps, FeedState> {
                 .then((res) => res.json())
                 .then((data) => {
                     this.handleClose()
-                    this.componentDidMount()
+                    this.handleChangeCounter()
                     this.setState({
                         post: ''
                     })
@@ -127,7 +127,7 @@ class Feed extends Component<FeedProps, FeedState> {
         })
             .then((res) => res.json())
             .then((data) => {
-                this.counterHandler(1)
+                this.handleChangeCounter()
                 this.handleUpdateClose()
                 console.log(data)
             })
@@ -214,8 +214,8 @@ class Feed extends Component<FeedProps, FeedState> {
                     this.state.postData.AllPosts.map((post) => {
                         return (
                             <Row key={post.id} className='feedposts'>
-                                <Col className='postName'>
-                                    <Row className='postNameRow'>
+                                <Col>
+                                    <Row>
                                         <Col className='postNameCol'>{post.AdminId ? <h4>Admin-{post.AdminId}</h4> : <h4>{post.User.FirstName}</h4>}</Col>
                                         {post.UserId && this.state.postData.userRole === 'Tenant'
                                             ? post.UserId === this.state.postData.userId
@@ -225,7 +225,7 @@ class Feed extends Component<FeedProps, FeedState> {
                                                         <Dropdown.Toggle id="postDropdown"></Dropdown.Toggle>
                                                         <Dropdown.Menu>
                                                             <Dropdown.Item onClick={(e) => { this.handleUpdateShow(e); this.setState({ selectedPostId: post.id, selectedPost: post.Post }) }}>Edit</Dropdown.Item>
-                                                            <Dropdown.Item><DeletePost token={this.props.token} post={post} counterHandler={this.counterHandler} /></Dropdown.Item>
+                                                            <Dropdown.Item><DeletePost token={this.props.token} post={post} handleChangeCounter={this.handleChangeCounter} /></Dropdown.Item>
                                                         </Dropdown.Menu>
                                                     </Dropdown>
                                                 </Col>
@@ -234,20 +234,23 @@ class Feed extends Component<FeedProps, FeedState> {
 
                                         {this.state.postData.userRole === 'Admin'
                                             ?
-                                            <Col>
+                                            <Col className='postDropdownCol'>
                                                 <Dropdown>
                                                     <Dropdown.Toggle id="postDropdown"></Dropdown.Toggle>
                                                     <Dropdown.Menu>
                                                         <Dropdown.Item onClick={(e) => { this.handleUpdateShow(e); this.setState({ selectedPostId: post.id, selectedPost: post.Post }) }}>Edit</Dropdown.Item>
-                                                        <Dropdown.Item><DeletePost token={this.props.token} post={post} counterHandler={this.counterHandler} /></Dropdown.Item>
+                                                        <Dropdown.Item><DeletePost token={this.props.token} post={post} handleChangeCounter={this.handleChangeCounter} /></Dropdown.Item>
                                                     </Dropdown.Menu>
                                                 </Dropdown>
                                             </Col>
                                             : undefined}
                                     </Row>
-                                </Col>
-                                <Col className='postBody'>
-                                    <p>{post.Post}</p>
+
+                                    <Row className='postBody'>
+                                        <Col>
+                                            <p>{post.Post}</p>
+                                        </Col>
+                                    </Row>
                                 </Col>
                             </Row>
                         )
@@ -266,7 +269,7 @@ class Feed extends Component<FeedProps, FeedState> {
                             value={this.state.selectedPost}
                             onChange={(e) => this.setState({ selectedPost: e.target.value })}
                         />
-                        { this.state.selectedPost
+                        {this.state.selectedPost
                             ?
                             <Button className='mt-3' variant="primary" onClick={(e) => this.handleUpdateFetch(e)}>
                                 Edit

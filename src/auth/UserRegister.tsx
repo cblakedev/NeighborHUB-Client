@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 
 type UserRegisterProps = {
-    updateToken: (newToken: string) => void
+    updateToken: (newToken: string, role: string) => void
 }
 
 type UserRegisterState = {
@@ -47,7 +47,7 @@ class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    this.props.updateToken(data.sessionToken)
+                    this.props.updateToken(data.sessionToken, data.user.Role)
                     this.setState({
                         email: '',
                         password: '',
