@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import UserAuth from '../src/auth/UserAuth'
-import AdminAuth from '../src/auth/AdminAuth'
+import Auth from '../src/auth/Auth'
 import Home from '../src/home/Home'
+import { Spinner } from 'react-bootstrap'
 
 type AppProp = {
 
@@ -16,7 +16,7 @@ type AppState = {
 
 export interface UserType {
   id: number
-  Email: string 
+  Email: string
   Password: string
   FirstName: string
   LastName: string
@@ -49,7 +49,7 @@ class App extends Component<AppProp, AppState> {
 
   clearToken = (): void => {
     localStorage.clear()
-    this.setState({ 
+    this.setState({
       sessionToken: '',
       userRole: ''
     })
@@ -67,7 +67,7 @@ class App extends Component<AppProp, AppState> {
   render() {
     return (
       <div className="App">
-        {this.state.sessionToken === localStorage.getItem('token') ? <Home token={this.state.sessionToken} role={this.state.userRole} clearToken={this.clearToken} /> : <AdminAuth updateToken={this.updateToken} />}
+        {this.state.sessionToken === localStorage.getItem('token') ? <Home token={this.state.sessionToken} role={this.state.userRole} clearToken={this.clearToken} /> : <Auth updateToken={this.updateToken}/>}
       </div>
     );
   }

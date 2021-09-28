@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Tabs, Tab } from 'react-bootstrap';
+import { Container, Row, Tabs, Tab } from 'react-bootstrap';
 import AdminLogin from './AdminLogin';
 import AdminRegister from './AdminRegister';
 
@@ -30,6 +30,7 @@ class AdminAuth extends Component<AdminAuthProps, AdminAuthState> {
                         <Tab eventKey='register' title='Register'>
                             <AdminRegister updateToken={this.props.updateToken}/>
                         </Tab>
+                        <Tab disabled eventKey='tenantInfo' title='Admin Portal'></Tab>
                     </Tabs>
                 </Row>
             </Container>

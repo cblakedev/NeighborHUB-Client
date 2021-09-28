@@ -7,6 +7,30 @@ html {
 }
 
 /* Auth Styles */
+.authBtnCol {
+    display: flex;
+    justify-content: center;
+}
+.userBtn a {
+    color: white;
+    text-decoration: none;
+}
+
+.userBtn {
+    margin: 10px;
+}
+
+.adminBtn {
+    background-color: red !important;
+    border-color: red !important;
+    margin: 10px;
+}
+
+.adminBtn a {
+    text-decoration: none;
+    color: white;
+}
+
 .mainAuthWrapper {
     max-width: 400px !important;
     height: 450px;
@@ -25,9 +49,18 @@ html {
 @media only screen and (max-width: 400px) {
     .mainAuthWrapper {
         width: 100% !important;
-        height: 100% !important;
+        height: 100vh !important;
         position: inherit;
         margin: 0 !important;
+    }
+
+    .authBtnRow {
+       
+    }
+
+    .authBtnCol {
+        position: absolute;
+        bottom: 0;     
     }
 }
 
@@ -173,6 +206,14 @@ html {
 }
 
 /* Ticket Styles */
+.ticketFeedTitleWrapper {
+    margin: 10px !important;
+}
+
+.createTicketCol {
+    margin: 10px !important;
+}
+
 .createTicketBtn {
     float: right;
 }
@@ -193,4 +234,19 @@ html {
     margin: 0 !important;
     border-top: 1px solid #adb5bd;
     padding: 10px 0;
+}
+
+.resolvingIcon {
+    width: 1rem !important;
+    height: 1rem !important;
+}
+
+.isResolvedIcon svg{
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    color: green;
+}
+
+.ticketModalButton {
+    margin-right: 10px;
 }

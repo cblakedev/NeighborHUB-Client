@@ -3,7 +3,8 @@ import { Container, Row, Col, Form, Button, Modal, Dropdown } from 'react-bootst
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { UserType } from '../App'
 import DeleteTicket from './DeleteTicket'
-
+import {Spinner} from 'react-bootstrap'
+import {FaCheckCircle} from 'react-icons/fa'
 
 type TicketsProps = {
     token: string | null
@@ -54,7 +55,7 @@ class Tickets extends Component<TicketsProps, TicketsState> {
             selectedTicketId: undefined,
             changeCounter: 1,
             isResolved: false,
-            resolving: true
+            resolving: false
         }
         this.handleChangeCounter = this.handleChangeCounter.bind(this)
     }
@@ -178,7 +179,9 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                         console.log(data)
                         this.setState({
                             selectedTicketTitle: '',
-                            selectedTicketDescription: ''
+                            selectedTicketDescription: '',
+                            resolving: false,
+                            isResolved: false,
                         })
                         this.handleUpdateClose()
                         this.handleChangeCounter()
@@ -279,11 +282,11 @@ class Tickets extends Component<TicketsProps, TicketsState> {
         return (
             <Container className='mainFeedWrapper'>
                 <Row className='feedWrapper'>
-                    <Col>
+                    <Col className='ticketFeedTitleWrapper'>
                         <h2>Tickets</h2>
                     </Col>
-                    <Col>
-                        <Button className='createTicketBtn mt-2' variant='primary' onClick={this.handleShow}>
+                    <Col className='createTicketCol'>
+                        <Button className='createTicketBtn' variant='primary' onClick={this.handleShow}>
                             Create Ticket
                         </Button>
                         <Modal show={this.state.showModal} onHide={this.handleClose}>
@@ -358,6 +361,21 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                                             <p>{ticket.TicketPost}</p>
                                         </Col>
                                     </Row>
+                                    {
+                                        ticket.resolving
+                                        ?
+                                        <span><Spinner className='resolvingIcon' animation="border" variant="warning" /> <i>Resolving ticket</i></span>
+                                        :
+                                        undefined
+                                    }
+
+                                    {
+                                        ticket.isResolved
+                                        ?
+                                        <span className='isResolvedIcon'><FaCheckCircle/><i>Ticket Resolved</i></span>
+                                        :
+                                        undefined
+                                    }
                                 </Col>
                             </Row >
                         )
@@ -388,7 +406,7 @@ class Tickets extends Component<TicketsProps, TicketsState> {
 
                             {this.state.selectedTicketDescription && this.state.selectedTicketDescription
                                 ?
-                                <Button className='mt-3' variant="primary" type='submit'>
+                                <Button className='mt-3 ticketModalButton' variant="primary" type='submit'>
                                     Edit
                                 </Button>
                                 :
@@ -400,8 +418,8 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                             {this.props.role === 'Admin'
                                 ?
                                 <span>
-                                    <Button className='mt-3' variant="primary">Resolving Ticket</Button>
-                                    <Button className='mt-3' variant="primary">Ticket Resolved</Button>
+                                    <Button className='mt-3 ticketModalButton' variant="primary" type='submit' onClick={(e) => this.setState({resolving: true})}>Resolving Ticket</Button>
+                                    <Button className='mt-3 ticketModalButton' variant="primary" type='submit' onClick={(e) => this.setState({isResolved: true})}>Ticket Resolved</Button>
                                 </span>
                                 :
                                 undefined}
