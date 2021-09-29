@@ -20,6 +20,11 @@ html {
     margin: 10px;
 }
 
+.loginValidator {
+    color: red;
+    font-size: .85rem;
+}
+
 .adminBtn {
     background-color: red !important;
     border-color: red !important;
@@ -33,7 +38,6 @@ html {
 
 .mainAuthWrapper {
     max-width: 400px !important;
-    height: 450px;
     background-color: white;
     position: absolute;
     top: 10%;

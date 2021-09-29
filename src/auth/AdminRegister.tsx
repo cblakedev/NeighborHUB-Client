@@ -74,8 +74,7 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
                 <Row>
                     <Form noValidate validated={this.state.validated} onSubmit={(e) => this.handleSubmit(e)}>
                         <Row>
-                            <Form.Group as={Col} xs='12' controlId='validationCustom10'>
-                                <Form.Label>Email</Form.Label>
+                            <Form.Group className='mt-3' as={Col} xs='12' controlId='validationCustom10'>
                                 <Form.Control
                                     required
                                     type="email"
@@ -86,8 +85,7 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
                                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 <Form.Control.Feedback type='invalid'>Please enter a valid email</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} xs='12' controlId='validationCustom11'>
-                                <Form.Label>Password</Form.Label>
+                            <Form.Group className='mt-3' as={Col} xs='12' controlId='validationCustom11'>
                                 <Form.Control
                                     required
                                     type="password"
@@ -101,8 +99,7 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
                             </Form.Group>
                         </Row>
                         <Row>
-                            <Form.Group as={Col} xs='6' controlId='validationCustom12'>
-                                <Form.Label>First Name</Form.Label>
+                            <Form.Group className='mt-3' as={Col} xs='6' controlId='validationCustom12'>      
                                 <Form.Control
                                     required
                                     type="text"
@@ -113,8 +110,7 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
                                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 <Form.Control.Feedback type='invalid'>Please enter your first name.</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} xs='6' controlId='validationCustom13'>
-                                <Form.Label>Last Name</Form.Label>
+                            <Form.Group className='mt-3' as={Col} xs='6' controlId='validationCustom13'>      
                                 <Form.Control
                                     required
                                     type="text"

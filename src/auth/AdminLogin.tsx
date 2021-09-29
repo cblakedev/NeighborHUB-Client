@@ -8,7 +8,8 @@ type AdminLoginProps = {
 type AdminLoginState = {
     validated: boolean,
     email: string,
-    password: string
+    password: string,
+    loginError: string
 }
 
 class AdminLogin extends Component<AdminLoginProps, AdminLoginState> {
@@ -17,11 +18,16 @@ class AdminLogin extends Component<AdminLoginProps, AdminLoginState> {
         this.state = {
             validated: false,
             email: '',
-            password: ''
+            password: '',
+            loginError: ''
         }
     }
 
     handleFetch = (): void => {
+        this.setState({
+            loginError: ''
+        });
+        
         if (this.state.email && this.state.password) {
             fetch('http://localhost:5000/admin/login', {
                 method: 'POST',
@@ -42,6 +48,12 @@ class AdminLogin extends Component<AdminLoginProps, AdminLoginState> {
                         email: '',
                         password: ''
                     })
+                })
+                .catch(err => {
+                    this.setState({
+                        loginError: 'Invalid email or password.'
+                    })
+                    console.log(err)
                 })
         }
     }
@@ -64,8 +76,7 @@ class AdminLogin extends Component<AdminLoginProps, AdminLoginState> {
             <Container>
                 <Row>
                     <Form noValidate validated={this.state.validated} onSubmit={(e) => this.handleSubmit(e)}>
-                        <Form.Group as={Col} xs='12' controlId='validationCustom08'>
-                            <Form.Label>Email</Form.Label>
+                        <Form.Group className='mt-3' as={Col} xs='12' controlId='validationCustom08'>
                             <Form.Control
                                 required
                                 type="email"
@@ -73,11 +84,9 @@ class AdminLogin extends Component<AdminLoginProps, AdminLoginState> {
                                 placeholder="Email"
                                 onChange={(e) => this.setState({ email: e.target.value })}
                             />
-                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                            <Form.Control.Feedback type='invalid'>Please enter a valid email</Form.Control.Feedback>
+                            {this.state.loginError ? <p className='loginValidator'>{this.state.loginError}</p> : undefined}
                         </Form.Group>
-                        <Form.Group as={Col} xs='12' controlId='validationCustom09'>
-                            <Form.Label>Password</Form.Label>
+                        <Form.Group className='mt-3' as={Col} xs='12' controlId='validationCustom09'>
                             <Form.Control
                                 required
                                 type="password"
@@ -85,8 +94,7 @@ class AdminLogin extends Component<AdminLoginProps, AdminLoginState> {
                                 placeholder="Password"
                                 onChange={(e) => this.setState({ password: e.target.value })}
                             />
-                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                            <Form.Control.Feedback type='invalid'>Please enter your password.</Form.Control.Feedback>
+                            {this.state.loginError ? <p className='loginValidator'>{this.state.loginError}</p> : undefined}
                         </Form.Group>
                         <Button type="submit" className='mt-3'>Login</Button>
                     </Form>

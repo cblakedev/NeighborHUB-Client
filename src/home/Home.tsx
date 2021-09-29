@@ -6,8 +6,9 @@ import { IoIosHome } from 'react-icons/io'
 import { GoIssueReopened } from 'react-icons/go'
 import { BiCalendarEvent } from 'react-icons/bi'
 import Feed from './Feed'
-import Events from '../events/Events'
+import SavedEvents from '../events/SavedEvents'
 import Tickets from '../tickets/Tickets'
+import Events from '../events/Events'
 
 type HomeProps = {
     token: string | null
@@ -43,7 +44,7 @@ class Home extends Component<HomeProps, HomeState> {
                                 <ul className='navItems'>
                                     <li><Link to='/'><IoIosHome/> Home</Link></li>
                                     <li><Link to='/tickets'><GoIssueReopened /> Tickets</Link></li>
-                                    <li><Link to='/events'><BiCalendarEvent /> Events</Link></li>
+                                    <li><Link to='/savedEvents'><BiCalendarEvent /> Events</Link></li>
                                 </ul>
                                 <Row className='logoutBtnWrapper'>
                                     <Col>
@@ -55,11 +56,11 @@ class Home extends Component<HomeProps, HomeState> {
                                 <Switch>
                                     <Route exact path='/'><Feed token={this.props.token}/></Route>
                                     <Route exact path='/tickets'><Tickets token={this.props.token} role={this.props.role}/></Route>
-                                    <Route exact path='/events'><Events /></Route>
+                                    <Route exact path='/savedEvents'><SavedEvents /></Route>
                                 </Switch>
                             </Col>
                             <Col className='eventViews'>
-                                <p>Im the events column</p>
+                                <Events />
                             </Col>
                         </Row>
                     </Router>

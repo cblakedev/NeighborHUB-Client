@@ -77,8 +77,7 @@ class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
                 <Row>
                     <Form noValidate validated={this.state.validated} onSubmit={(e) => this.handleSubmit(e)}>
                         <Row>
-                            <Form.Group as={Col} xs='12' controlId='validationCustom03'>
-                                <Form.Label>Email</Form.Label>
+                            <Form.Group className='mt-3' as={Col} xs='12' controlId='validationCustom03'>
                                 <Form.Control
                                     required
                                     type="email"
@@ -89,8 +88,7 @@ class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
                                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 <Form.Control.Feedback type='invalid'>Please enter a valid email</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} xs='12' controlId='validationCustom04'>
-                                <Form.Label>Password</Form.Label>
+                            <Form.Group className='mt-3' as={Col} xs='12' controlId='validationCustom04'>
                                 <Form.Control
                                     required
                                     type="password"
@@ -104,8 +102,7 @@ class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
                             </Form.Group>
                         </Row>
                         <Row>
-                            <Form.Group as={Col} xs='6' controlId='validationCustom05'>
-                                <Form.Label>First Name</Form.Label>
+                            <Form.Group className='mt-3' as={Col} xs='6' controlId='validationCustom05'>
                                 <Form.Control
                                     required
                                     type="text"
@@ -116,8 +113,7 @@ class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
                                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 <Form.Control.Feedback type='invalid'>Please enter your first name.</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} xs='6' controlId='validationCustom06'>
-                                <Form.Label>Last Name</Form.Label>
+                            <Form.Group className='mt-3' as={Col} xs='6' controlId='validationCustom06'>
                                 <Form.Control
                                     required
                                     type="text"
@@ -128,8 +124,7 @@ class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
                                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 <Form.Control.Feedback type='invalid'>Please enter your last name.</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} xs='6' controlId='validationCustom07'>
-                                <Form.Label>Unit Number</Form.Label>
+                            <Form.Group className='mt-3' as={Col} xs='6' controlId='validationCustom07'>        
                                 <Form.Control
                                     required
                                     type="text"

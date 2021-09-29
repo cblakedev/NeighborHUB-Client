@@ -11,6 +11,7 @@ type UserLoginState = {
     validated: boolean,
     email: string,
     password: string
+    loginError: string
 }
 
 class UserLogin extends Component<UserLoginProps, UserLoginState> {
@@ -19,11 +20,16 @@ class UserLogin extends Component<UserLoginProps, UserLoginState> {
         this.state = {
             validated: false,
             email: '',
-            password: ''
+            password: '',
+            loginError: ''
         }
     }
 
     handleFetch = (): void => {
+        this.setState({
+            loginError: ''
+        });
+
         if (this.state.email && this.state.password) {
             fetch('http://localhost:5000/user/login', {
                 method: 'POST',
@@ -44,6 +50,12 @@ class UserLogin extends Component<UserLoginProps, UserLoginState> {
                         email: '',
                         password: ''
                     })
+                })
+                .catch(err => {
+                    this.setState({
+                        loginError: 'Invalid email or password.'
+                    })
+                    console.log(err)
                 })
         }
     }
@@ -66,8 +78,7 @@ class UserLogin extends Component<UserLoginProps, UserLoginState> {
             <Container className='mainWrapper'>
                 <Row className='loginWrapper'>
                     <Form noValidate validated={this.state.validated} onSubmit={(e) => this.handleSubmit(e)}>
-                        <Form.Group as={Col} md='12' controlId='validationCustom01'>
-                            <Form.Label>Email</Form.Label>
+                        <Form.Group className='mt-3' as={Col} md='12' controlId='validationCustom01'>
                             <Form.Control
                                 required
                                 type="email"
@@ -75,11 +86,9 @@ class UserLogin extends Component<UserLoginProps, UserLoginState> {
                                 placeholder="Email"
                                 onChange={(e) => this.setState({ email: e.target.value })}
                             />
-                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                            <Form.Control.Feedback type='invalid'>Please enter a valid email</Form.Control.Feedback>
+                            {this.state.loginError ? <p className='loginValidator'>{this.state.loginError}</p> : undefined }
                         </Form.Group>
-                        <Form.Group as={Col} md='12' controlId='validationCustom02'>
-                            <Form.Label>Password</Form.Label>
+                        <Form.Group className='mt-3' as={Col} md='12' controlId='validationCustom02'>
                             <Form.Control
                                 required
                                 type="password"
@@ -87,8 +96,7 @@ class UserLogin extends Component<UserLoginProps, UserLoginState> {
                                 placeholder="Password"
                                 onChange={(e) => this.setState({ password: e.target.value })}
                             />
-                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                            <Form.Control.Feedback type='invalid'>Please enter your password.</Form.Control.Feedback>
+                            {this.state.loginError ? <p className='loginValidator'>{this.state.loginError}</p> : undefined }
                         </Form.Group>
                         <Button type="submit" className='mt-3'>Login</Button>
                     </Form>
