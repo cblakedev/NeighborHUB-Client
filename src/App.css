@@ -254,3 +254,45 @@ html {
 .ticketModalButton {
     margin-right: 10px;
 }
+
+/* Events Styles */
+
+.eventViews {
+    overflow-y: scroll;
+}
+
+.eventItemCol {
+    margin: 15px 0;
+}
+
+.eventItemCol h4 {
+    margin-top: 5px;
+}
+
+.eventItemCol h5 {
+    display: inline-block;
+}
+
+.eventWrapper img {
+    width: 100%;
+    height: auto;
+    border-radius: .50rem;
+}
+
+.eventWrapper a {
+    color: white;
+}
+
+.eventWrapper svg {
+    float: right;
+    font-size: 2.3rem;
+}
+
+.eventWrapper svg:hover {
+    color: grey;
+    cursor: pointer;
+}
+
+.eventBtns {
+    margin-top: 7px;
+}
