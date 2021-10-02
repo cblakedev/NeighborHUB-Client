@@ -255,7 +255,7 @@ html {
     margin-right: 10px;
 }
 
-/* Events Styles */
+/* Events Feed Styles */
 
 .eventViews {
     overflow-y: scroll;
@@ -280,7 +280,7 @@ html {
 }
 
 .eventWrapper a {
-    color: white;
+
 }
 
 .eventWrapper svg {
@@ -295,4 +295,30 @@ html {
 
 .eventBtns {
     margin-top: 7px;
+}
+
+#eventsDropdown::after {
+    display: none
+}
+
+.eventModalImg {
+    width: 100%;
+}
+
+.eventModal .modal-content{
+   max-width: 400px;
+   margin: auto;
+}
+
+.eventModalDate {
+    text-align: center;
+}
+
+.eventModalTime {
+    text-align: center;
+}
+
+/* Saved Events Styles */
+.eventItemRow img {
+    width: 100%;
 }

@@ -23,18 +23,18 @@ class DeleteTicket extends Component<DeleteTicketProps, DeleteTicketState> {
     handleDelete = (e: React.MouseEvent): void => {
         e.preventDefault()
 
-        fetch(`http://localhost:5000/ticket/deleteticket/${this.props.ticketId}`,{
+        fetch(`http://localhost:5000/ticket/deleteticket/${this.props.ticketId}`, {
             method: 'DELETE',
             headers: new Headers({
                 'Content-type': 'application/json',
                 'Authorization': `Bearer ${this.props.token}`
             })
         })
-        .then((res) => res.json())
-        .then((data) => {
-            console.log(data)
-            this.props.handleChangeCounter();
-        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data)
+                this.props.handleChangeCounter();
+            })
     }
 
     render() {

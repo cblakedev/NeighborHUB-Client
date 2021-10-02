@@ -17,17 +17,23 @@ type HomeProps = {
 }
 
 type HomeState = {
-
+    eventChangeCounter: number
 }
 
 class Home extends Component<HomeProps, HomeState> {
     constructor(props: HomeProps) {
         super(props)
         this.state = {
-
+            eventChangeCounter: 0
         }
+        this.eventUpdateCounter = this.eventUpdateCounter.bind(this)
     }
 
+    eventUpdateCounter = (): void => {
+        this.setState({
+            eventChangeCounter: this.state.eventChangeCounter + 1
+        })
+    }
 
     render() {
         return (
@@ -42,7 +48,7 @@ class Home extends Component<HomeProps, HomeState> {
                         <Row className='homeWrapper'>
                             <Col className='homeLinks'>
                                 <ul className='navItems'>
-                                    <li><Link to='/'><IoIosHome/> Home</Link></li>
+                                    <li><Link to='/'><IoIosHome /> Home</Link></li>
                                     <li><Link to='/tickets'><GoIssueReopened /> Tickets</Link></li>
                                     <li><Link to='/savedEvents'><BiCalendarEvent /> Events</Link></li>
                                 </ul>
@@ -54,13 +60,13 @@ class Home extends Component<HomeProps, HomeState> {
                             </Col>
                             <Col className='routerViews' sm={6}>
                                 <Switch>
-                                    <Route exact path='/'><Feed token={this.props.token}/></Route>
-                                    <Route exact path='/tickets'><Tickets token={this.props.token} role={this.props.role}/></Route>
-                                    <Route exact path='/savedEvents'><SavedEvents /></Route>
+                                    <Route exact path='/'><Feed token={this.props.token} /></Route>
+                                    <Route exact path='/tickets'><Tickets token={this.props.token} role={this.props.role} /></Route>
+                                    <Route exact path='/savedEvents'><SavedEvents eventUpdateCounter={this.eventUpdateCounter} eventChangeCounter={this.state.eventChangeCounter} token={this.props.token} /></Route>
                                 </Switch>
                             </Col>
                             <Col className='eventViews'>
-                                <Events />
+                                <Events eventUpdateCounter={this.eventUpdateCounter} eventChangeCounter={this.state.eventChangeCounter} token={this.props.token} />
                             </Col>
                         </Row>
                     </Router>

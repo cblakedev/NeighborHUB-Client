@@ -3,8 +3,8 @@ import { Container, Row, Col, Form, Button, Modal, Dropdown } from 'react-bootst
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { UserType } from '../App'
 import DeleteTicket from './DeleteTicket'
-import {Spinner} from 'react-bootstrap'
-import {FaCheckCircle} from 'react-icons/fa'
+import { Spinner } from 'react-bootstrap'
+import { FaCheckCircle } from 'react-icons/fa'
 
 type TicketsProps = {
     token: string | null
@@ -363,18 +363,18 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                                     </Row>
                                     {
                                         ticket.resolving
-                                        ?
-                                        <span><Spinner className='resolvingIcon' animation="border" variant="warning" /> <i>Resolving ticket</i></span>
-                                        :
-                                        undefined
+                                            ?
+                                            <span><Spinner className='resolvingIcon' animation="border" variant="warning" /> <i>Resolving ticket</i></span>
+                                            :
+                                            undefined
                                     }
 
                                     {
                                         ticket.isResolved
-                                        ?
-                                        <span className='isResolvedIcon'><FaCheckCircle/><i>Ticket Resolved</i></span>
-                                        :
-                                        undefined
+                                            ?
+                                            <span className='isResolvedIcon'><FaCheckCircle /><i>Ticket Resolved</i></span>
+                                            :
+                                            undefined
                                     }
                                 </Col>
                             </Row >
@@ -418,8 +418,8 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                             {this.props.role === 'Admin'
                                 ?
                                 <span>
-                                    <Button className='mt-3 ticketModalButton' variant="primary" type='submit' onClick={(e) => this.setState({resolving: true})}>Resolving Ticket</Button>
-                                    <Button className='mt-3 ticketModalButton' variant="primary" type='submit' onClick={(e) => this.setState({isResolved: true})}>Ticket Resolved</Button>
+                                    <Button className='mt-3 ticketModalButton' variant="primary" type='submit' onClick={(e) => this.setState({ resolving: true })}>Resolving Ticket</Button>
+                                    <Button className='mt-3 ticketModalButton' variant="primary" type='submit' onClick={(e) => this.setState({ isResolved: true })}>Ticket Resolved</Button>
                                 </span>
                                 :
                                 undefined}

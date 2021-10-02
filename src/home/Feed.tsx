@@ -258,7 +258,7 @@ class Feed extends Component<FeedProps, FeedState> {
                     :
                     undefined}
 
-                <Modal show={this.state.updateModalShow} onHide={this.handleUpdateClose}>
+                <Modal show={this.state.updateModalShow} onHide={() => this.handleUpdateClose()}>
                     <Modal.Header closeButton>
                         <Modal.Title>Edit Post</Modal.Title>
                     </Modal.Header>
