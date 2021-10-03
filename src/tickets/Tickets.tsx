@@ -5,6 +5,9 @@ import { UserType } from '../App'
 import DeleteTicket from './DeleteTicket'
 import { Spinner } from 'react-bootstrap'
 import { FaCheckCircle } from 'react-icons/fa'
+import { BsThreeDots } from 'react-icons/bs'
+import Moment from 'react-moment'
+import { AiOutlineEdit } from 'react-icons/ai'
 
 type TicketsProps = {
     token: string | null
@@ -15,11 +18,13 @@ type TicketsState = {
     showModal: boolean
     validated: boolean
     ticketTitle: string
+    unitNumber: string
     ticketDescription: string
     ticketData: ExistingTicket[]
     updateModalShow: boolean
     selectedTicketTitle: string
     selectedTicketDescription: string
+    selectedUnitNumber: string
     selectedTicketId: number | undefined
     changeCounter: number
     isResolved: boolean
@@ -30,6 +35,7 @@ type ExistingTicket = {
     AdminId: number | null
     TicketPost: string
     TicketTitle: string
+    UnitNumber: string
     User: UserType
     UserId: number
     createdAt: string
@@ -47,11 +53,13 @@ class Tickets extends Component<TicketsProps, TicketsState> {
             showModal: false,
             validated: false,
             ticketTitle: '',
+            unitNumber: '',
             ticketDescription: '',
             ticketData: [],
             updateModalShow: false,
             selectedTicketTitle: '',
             selectedTicketDescription: '',
+            selectedUnitNumber: '',
             selectedTicketId: undefined,
             changeCounter: 1,
             isResolved: false,
@@ -108,7 +116,8 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                 body: JSON.stringify({
                     ticket: {
                         TicketTitle: this.state.ticketTitle,
-                        TicketPost: this.state.ticketDescription
+                        TicketPost: this.state.ticketDescription,
+                        UnitNumber: this.state.unitNumber
                     }
                 }),
                 headers: new Headers({
@@ -122,7 +131,8 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                     this.handleClose();
                     this.setState({
                         ticketTitle: '',
-                        ticketDescription: ''
+                        ticketDescription: '',
+                        unitNumber: ''
                     })
                     this.handleChangeCounter()
                 })
@@ -139,7 +149,8 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                     body: JSON.stringify({
                         ticket: {
                             TicketTitle: this.state.selectedTicketTitle,
-                            TicketPost: this.state.selectedTicketDescription
+                            TicketPost: this.state.selectedTicketDescription,
+                            UnitNumber: this.state.selectedUnitNumber
                         }
                     }),
                     headers: new Headers({
@@ -152,7 +163,8 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                         console.log(data)
                         this.setState({
                             selectedTicketTitle: '',
-                            selectedTicketDescription: ''
+                            selectedTicketDescription: '',
+                            selectedUnitNumber: ''
                         })
                         this.handleUpdateClose()
                         this.handleChangeCounter()
@@ -165,6 +177,7 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                         ticket: {
                             TicketTitle: this.state.selectedTicketTitle,
                             TicketPost: this.state.selectedTicketDescription,
+                            UnitNumber: this.state.selectedUnitNumber,
                             isResolved: this.state.isResolved,
                             resolving: this.state.resolving
                         }
@@ -180,6 +193,7 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                         this.setState({
                             selectedTicketTitle: '',
                             selectedTicketDescription: '',
+                            selectedUnitNumber: '',
                             resolving: false,
                             isResolved: false,
                         })
@@ -306,7 +320,18 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                         <Form.Control.Feedback type="invalid">Ticket title required.</Form.Control.Feedback>
                                     </Form.Group>
-                                    <Form.Group className='mt-3' controlId='ticketcontrol2'>
+                                    <Form.Group as={Col} md='12' className='mt-3' controlId='ticketcontrol2'>
+                                        <Form.Control
+                                            type='text'
+                                            placeholder='Unit'
+                                            required
+                                            value={this.state.unitNumber}
+                                            onChange={(e) => this.setState({ unitNumber: e.target.value })}
+                                        />
+                                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                        <Form.Control.Feedback type="invalid">Unit number required.</Form.Control.Feedback>
+                                    </Form.Group>
+                                    <Form.Group as={Col} className='mt-3' controlId='ticketcontrol3'>
                                         <Form.Control
                                             as='textarea'
                                             type='text'
@@ -334,22 +359,24 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                             <Row key={ticket.id} className='ticketWrapper'>
                                 <Col>
                                     <Row>
-                                        <Col className='ticketTitleCol'>
+                                        <Col xs={10} className='ticketTitleCol'>
                                             <h4 >{ticket.TicketTitle}</h4>
+                                            <span>Unit {ticket.UnitNumber} | <i><Moment className='ticketTimeStamp' fromNow>{ticket.createdAt}</Moment></i></span>
                                         </Col>
-                                        <Col className='ticketDropdownCol'>
+                                        <Col xs={2} className='ticketDropdownCol'>
                                             <Dropdown>
-                                                <Dropdown.Toggle id="postDropdown"></Dropdown.Toggle>
+                                                <Dropdown.Toggle variant='light' id="postDropdown"><BsThreeDots /></Dropdown.Toggle>
                                                 <Dropdown.Menu>
                                                     <Dropdown.Item onClick={(e) => {
                                                         this.handleUpdateShow(e);
                                                         this.setState({
                                                             selectedTicketTitle: ticket.TicketTitle,
                                                             selectedTicketDescription: ticket.TicketPost,
+                                                            selectedUnitNumber: ticket.UnitNumber,
                                                             selectedTicketId: ticket.id
                                                         })
                                                     }}>
-                                                        Edit
+                                                        <AiOutlineEdit />Edit
                                                     </Dropdown.Item>
                                                     <Dropdown.Item><DeleteTicket token={this.props.token} ticketId={ticket.id} handleChangeCounter={this.handleChangeCounter} /></Dropdown.Item>
                                                 </Dropdown.Menu>
@@ -395,6 +422,13 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                                     onChange={(e) => this.setState({ selectedTicketTitle: e.target.value })}
                                 />
                             </Form.Group>
+                            <Form.Group as={Col} className='mt-3' md='12'>
+                                <Form.Control
+                                    className='modalUnitNumber'
+                                    value={this.state.selectedUnitNumber}
+                                    onChange={(e) => this.setState({ selectedUnitNumber: e.target.value })}
+                                />
+                            </Form.Group>
                             <Form.Group className='mt-3' as={Col} md='12'>
                                 <Form.Control
                                     className='modalTicketText'
@@ -404,14 +438,14 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                                 />
                             </Form.Group>
 
-                            {this.state.selectedTicketDescription && this.state.selectedTicketDescription
+                            {this.state.selectedTicketTitle && this.state.selectedTicketDescription && this.state.selectedUnitNumber
                                 ?
                                 <Button className='mt-3 ticketModalButton' variant="primary" type='submit'>
-                                    Edit
+                                    <AiOutlineEdit />Edit
                                 </Button>
                                 :
                                 <Button className='mt-3' variant="primary" type='submit' disabled>
-                                    Edit
+                                    <AiOutlineEdit />Edit
                                 </Button>
                             }
 

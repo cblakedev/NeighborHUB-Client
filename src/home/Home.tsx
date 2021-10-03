@@ -9,6 +9,7 @@ import Feed from './Feed'
 import SavedEvents from '../events/SavedEvents'
 import Tickets from '../tickets/Tickets'
 import Events from '../events/Events'
+import { RiLogoutBoxLine } from 'react-icons/ri'
 
 type HomeProps = {
     token: string | null
@@ -54,18 +55,18 @@ class Home extends Component<HomeProps, HomeState> {
                                 </ul>
                                 <Row className='logoutBtnWrapper'>
                                     <Col>
-                                        <Button onClick={() => this.props.clearToken()}>Logout</Button>
+                                        <Button onClick={() => this.props.clearToken()}><RiLogoutBoxLine />Logout</Button>
                                     </Col>
                                 </Row>
                             </Col>
-                            <Col className='routerViews' sm={6}>
+                            <Col className='routerViews' sm={7}>
                                 <Switch>
                                     <Route exact path='/'><Feed token={this.props.token} /></Route>
                                     <Route exact path='/tickets'><Tickets token={this.props.token} role={this.props.role} /></Route>
                                     <Route exact path='/savedEvents'><SavedEvents eventUpdateCounter={this.eventUpdateCounter} eventChangeCounter={this.state.eventChangeCounter} token={this.props.token} /></Route>
                                 </Switch>
                             </Col>
-                            <Col className='eventViews'>
+                            <Col sm={3} className='eventViews'>
                                 <Events eventUpdateCounter={this.eventUpdateCounter} eventChangeCounter={this.state.eventChangeCounter} token={this.props.token} />
                             </Col>
                         </Row>

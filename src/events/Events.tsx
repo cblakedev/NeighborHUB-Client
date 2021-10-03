@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Row, Col, Button, Dropdown, Modal, Container } from 'react-bootstrap';
+import { Row, Col, Button, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { AiFillPlusCircle } from 'react-icons/ai'
+import { BsPlusCircle } from 'react-icons/bs'
+import { ImTicket } from 'react-icons/im'
+import { RiBookmark3Line } from 'react-icons/ri'
 
 type EventsProps = {
     token: string | null
@@ -53,6 +55,14 @@ class Events extends Component<EventsProps, EventsState> {
         this.setState({ showModal: true })
     }
 
+    truncateString = (string: string, limit: number): string => {
+        if (string.length > limit) {
+            return string.substring(0, limit) + "..."
+        } else {
+            return string
+        }
+    }
+
     saveEvent = () => {
         fetch(`http://localhost:5000/event/create`, {
             method: 'POST',
@@ -93,18 +103,18 @@ class Events extends Component<EventsProps, EventsState> {
     render() {
         return (
             <>
-                <h2>Upcoming Events</h2>
+                <h2 className='upcomingEventsTitle'>Upcoming Events</h2>
                 {
                     this.state.eventData._embedded
                         ?
                         this.state.eventData._embedded.events.map((event: any) => {
                             return (
-                                <Row className='eventWrapper'>
+                                <Row key={event.id} className='eventWrapper'>
                                     <Col className='eventItemCol'>
-                                        <img src={event.images[0].url} />
-                                        <h4>{event.name}</h4>
+                                        <img src={event.images[0].url} alt='Event Poster' />
+                                        <h4>{this.truncateString(event.name, 20)}</h4>
 
-                                        <Button onClick={(e) => {
+                                        <Button variant="outline-primary" onClick={(e) => {
                                             this.setState({
                                                 eventName: event.name,
                                                 eventPoster: event.images[0].url,
@@ -112,7 +122,7 @@ class Events extends Component<EventsProps, EventsState> {
                                                 eventTime: this.timeConvert(event.dates.start.dateTime),
                                                 eventUrl: event.url
                                             }); this.handleShowEvent(e)
-                                        }}>Learn More</Button>
+                                        }}><BsPlusCircle /></Button>
 
 
                                     </Col>
@@ -128,7 +138,7 @@ class Events extends Component<EventsProps, EventsState> {
                         <Modal.Title>{this.state.eventName}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <img className='eventModalImg' src={this.state.eventPoster} />
+                        <img className='eventModalImg' src={this.state.eventPoster} alt='Event Poster' />
                         <Row>
                             <Col className='eventModalDate'>
                                 <h5>When:</h5>
@@ -142,10 +152,10 @@ class Events extends Component<EventsProps, EventsState> {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="primary" href={this.state.eventUrl} target='_blank' onClick={(e) => this.handleCloseEvent()}>
-                            Get Tickets
+                            <ImTicket />Get Tickets
                         </Button>
                         <Button variant="primary" onClick={(e) => this.saveEvent()}>
-                            Bookmark
+                            <RiBookmark3Line />Bookmark
                         </Button>
                     </Modal.Footer>
                 </Modal>

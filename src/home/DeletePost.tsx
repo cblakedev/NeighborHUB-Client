@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { AllPostsType } from './Feed'
+import { RiDeleteBinLine } from 'react-icons/ri'
 
 type DeletePostProps = {
     post: AllPostsType
@@ -37,7 +38,7 @@ class DeletePost extends Component<DeletePostProps, DeletePostState> {
     render() {
         return (
             <div>
-                <span onClick={(e) => this.handleDelete(e)}>Delete</span>
+                <span onClick={(e) => this.handleDelete(e)}><RiDeleteBinLine />Delete</span>
             </div>
         )
     }

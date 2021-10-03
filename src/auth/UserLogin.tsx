@@ -76,6 +76,12 @@ class UserLogin extends Component<UserLoginProps, UserLoginState> {
     render() {
         return (
             <Container className='mainWrapper'>
+                <Row>
+                    <Col>
+                        <h1 className='appTitle'>NeighborHUB</h1>
+                        <h3 className='appUser'>Tenant Portal</h3>
+                    </Col>
+                </Row>
                 <Row className='loginWrapper'>
                     <Form noValidate validated={this.state.validated} onSubmit={(e) => this.handleSubmit(e)}>
                         <Form.Group className='mt-3' as={Col} md='12' controlId='validationCustom01'>
@@ -86,7 +92,7 @@ class UserLogin extends Component<UserLoginProps, UserLoginState> {
                                 placeholder="Email"
                                 onChange={(e) => this.setState({ email: e.target.value })}
                             />
-                            {this.state.loginError ? <p className='loginValidator'>{this.state.loginError}</p> : undefined }
+                            {this.state.loginError ? <p className='loginValidator'>{this.state.loginError}</p> : undefined}
                         </Form.Group>
                         <Form.Group className='mt-3' as={Col} md='12' controlId='validationCustom02'>
                             <Form.Control
@@ -96,7 +102,7 @@ class UserLogin extends Component<UserLoginProps, UserLoginState> {
                                 placeholder="Password"
                                 onChange={(e) => this.setState({ password: e.target.value })}
                             />
-                            {this.state.loginError ? <p className='loginValidator'>{this.state.loginError}</p> : undefined }
+                            {this.state.loginError ? <p className='loginValidator'>{this.state.loginError}</p> : undefined}
                         </Form.Group>
                         <Button type="submit" className='mt-3'>Login</Button>
                     </Form>

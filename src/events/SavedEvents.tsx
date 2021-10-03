@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Modal, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { RiDeleteBinLine } from 'react-icons/ri'
+import { ImTicket } from 'react-icons/im'
 
 type SavedEventsProps = {
     token: string | null
@@ -53,6 +55,14 @@ class SavedEvents extends Component<SavedEventsProps, SavedEventsState> {
 
     handleShowEvent = (e: React.MouseEvent): void => {
         this.setState({ showModal: true })
+    }
+
+    truncateString = (string: string, limit: number): string => {
+        if (string.length > limit) {
+            return string.substring(0, limit) + "..."
+        } else {
+            return string
+        }
     }
 
     deleteEvent = (): void => {
@@ -122,9 +132,9 @@ class SavedEvents extends Component<SavedEventsProps, SavedEventsState> {
                         ?
                         this.state.userEvents.map((event) => {
                             return (
-                                <Col sm={6}>
-                                    <img src={event.EventPoster} />
-                                    <h4>{event.EventName}</h4>
+                                <Col className='savedEventItem' sm={6}>
+                                    <img src={event.EventPoster} alt='Event Poster' />
+                                    <h4>{this.truncateString(event.EventName, 20)}</h4>
                                     <Button onClick={(e) => {
                                         this.setState({
                                             eventName: event.EventName,
@@ -134,7 +144,7 @@ class SavedEvents extends Component<SavedEventsProps, SavedEventsState> {
                                             eventUrl: event.EventUrl,
                                             eventId: event.id
                                         }); this.handleShowEvent(e)
-                                    }}>Learn More</Button>
+                                    }}>Event Info</Button>
                                 </Col>
                             )
                         })
@@ -147,7 +157,7 @@ class SavedEvents extends Component<SavedEventsProps, SavedEventsState> {
                         <Modal.Title>{this.state.eventName}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <img className='eventModalImg' src={this.state.eventPoster} />
+                        <img className='eventModalImg' src={this.state.eventPoster} alt='Event Poster' />
                         <Row>
                             <Col className='eventModalDate'>
                                 <h5>When:</h5>
@@ -161,10 +171,10 @@ class SavedEvents extends Component<SavedEventsProps, SavedEventsState> {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="primary" href={this.state.eventUrl} target='_blank' onClick={(e) => this.handleCloseEvent()}>
-                            Get Tickets
+                            <ImTicket />Get Tickets
                         </Button>
                         <Button variant="primary" onClick={(e) => this.deleteEvent()}>
-                            Delete
+                            <RiDeleteBinLine />Delete
                         </Button>
                     </Modal.Footer>
                 </Modal>

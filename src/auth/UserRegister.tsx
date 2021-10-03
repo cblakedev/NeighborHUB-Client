@@ -75,6 +75,12 @@ class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
         return (
             <Container>
                 <Row>
+                    <Col>
+                        <h1 className='appTitle'>NeighborHUB</h1>
+                        <h3 className='appUser'>Tenant Portal</h3>
+                    </Col>
+                </Row>
+                <Row>
                     <Form noValidate validated={this.state.validated} onSubmit={(e) => this.handleSubmit(e)}>
                         <Row>
                             <Form.Group className='mt-3' as={Col} xs='12' controlId='validationCustom03'>

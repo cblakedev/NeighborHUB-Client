@@ -1,12 +1,49 @@
 html {
-    background-color: grey;
+    background-color: #E5E5E5
 }
 
 .App {
-    background-color: grey;
+    background-color: #E5E5E5
+}
+
+.btn-primary {
+    background-color: #1089FF !important;
+    border-color: #1089FF !important;
+}
+
+.btn-primary:hover {
+    background-color: #23374D !important;
+    border-color: #23374D !important;
+}
+
+h2 {
+    color: #23374D;
+}
+
+h4{
+    color: #23374D;
 }
 
 /* Auth Styles */
+.appTitle {
+    text-align: center;
+    color: #23374D;
+}
+
+.appUser {
+    text-align: center;
+    color: #23374D;
+}
+
+.nav-link {
+    color: #a5a5a5 !important;
+}
+
+.nav-link.active {
+    border-bottom-color: #1089FF !important;
+    color: #1089FF !important;
+}
+
 .authBtnCol {
     display: flex;
     justify-content: center;
@@ -26,8 +63,8 @@ html {
 }
 
 .adminBtn {
-    background-color: red !important;
-    border-color: red !important;
+    background-color: #EB8242 !important;
+    border-color: #EB8242 !important;
     margin: 10px;
 }
 
@@ -44,11 +81,14 @@ html {
     margin-left: -200px !important;
     left: 50%;
     border-radius: .25rem;
+    box-shadow: 0 0 10px 1px rgb(196, 196, 196);
 }
 
 .tab-content {
     padding: 20px 0 !important;
 }
+
+
 
 @media only screen and (max-width: 400px) {
     .mainAuthWrapper {
@@ -70,19 +110,27 @@ html {
 
 /* Home Nav Styles */
 .headerBar {
-    background-color: lightcoral;
+    background-color: white;
+    box-shadow: 0 0 10px 1px rgb(196, 196, 196);
 }
 
 .homeLinks {
-    height: 85vh;
+    height: 350px;
     max-width: 200px !important;
-    background-color: lightgreen;
-    margin: 10px !important;
+    background-color: white;
+    margin: 30px 10px !important;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
     position: relative;
-    padding-top: 15%;
+    padding-top: 20px;
+    box-shadow: 0 0 10px 1px rgb(196, 196, 196);
+    border: 1px solid #adb5bd;
+}
+
+.navItems {
+    padding: 0;
+    margin: 0 auto;
 }
 
 .navItems li {
@@ -93,7 +141,11 @@ html {
 
 .navItems a {
     text-decoration: none;
-    color: mediumblue;
+    color: #23374D;
+}
+
+.navItems a:hover {
+    color: #1089FF
 }
 
 .navItems svg {
@@ -101,42 +153,51 @@ html {
     font-size: 1.5rem
 }
 
-.logoutBtnWrapper {
+.logoutBtnWrapper Button {
     position: absolute;
     bottom: 10px;
     left: 50%;
-    margin-left: -50px !important;
+    margin-left: -45px !important;
 }
 
 .routerViews {
-    height: 85vh;
+    height: 90vh;
     overflow-y: scroll;
-    background-color:peru;
-    margin: 10px !important;
+    background-color:rgba(255, 255, 255, 0);
+    margin: 0 10px !important;
     border-radius: 8px;
+    margin-top: 30px !important;
 }
 
 .eventViews {
-    height: 85vh;
-    background-color: royalblue;
-    margin: 10px !important;
+    height: 90vh;
+    background-color: white;
+    margin: 30px 10px !important;
     border-radius: 8px;
+    box-shadow: 0 0 10px 1px rgb(196, 196, 196);
+    border: 1px solid #adb5bd;
 }
 
 /* Feed Styles */
 .feedWrapper {
-    border-bottom: 1px solid #bbbbbb
+    border-bottom: 1px solid #bbbbbb;
 }
+
+.dropdown-toggle::after {
+    content: none !important;
+}
+
 
 .postBox {
     border: 1px solid rgb(168, 168, 168);
     background-color: white;
-    margin: 20px 0 !important;
+    margin-bottom: 20px !important;
+    box-shadow: 0 0 10px 1px rgb(196, 196, 196);
 }
 
 .postBox:hover {
     cursor: pointer;
-    background-color: rgb(233, 233, 233) !important;
+    background-color: #E8F0F2 !important;
 }
 
 .postBox p {
@@ -157,11 +218,13 @@ html {
     border: 1px solid #adb5bd;
     border-radius: .75rem;
     margin: 20px 0 !important;
+    box-shadow: 0 0 10px 1px rgb(196, 196, 196);
 }
 
 .postNameCol h4 {
     margin: 0 !important;
     padding: 5px 0 !important;
+    color: #23374D;
 }
 
 .postMenuCtrl {
@@ -206,16 +269,23 @@ html {
 #postDropdown {
     float: right;
     font-size: .75rem;
-    margin: 5px 0;
+    padding: 0; 
+    font-size: 1.5rem;
+}
+
+
+.btn-light {
+    background-color: white !important;
+    border-color: white !important;
 }
 
 /* Ticket Styles */
 .ticketFeedTitleWrapper {
-    margin: 10px !important;
+    margin: 0 10px !important;
 }
 
 .createTicketCol {
-    margin: 10px !important;
+    margin: 0 10px !important;
 }
 
 .createTicketBtn {
@@ -232,6 +302,10 @@ html {
 .ticketTitleCol h4 {
     margin: 0 !important;
     padding: 5px 0 !important;
+}
+
+.ticketTitleCol p {
+    margin: 0;
 }
 
 .ticketPostWrapper p{
@@ -256,6 +330,10 @@ html {
 }
 
 /* Events Feed Styles */
+.upcomingEventsTitle {
+    border-bottom: 1px solid #bbbbbb;
+    padding-bottom: 8px;
+}
 
 .eventViews {
     overflow-y: scroll;
@@ -297,12 +375,27 @@ html {
     margin-top: 7px;
 }
 
+.btn-outline-primary {
+    color: #1089FF !important;
+    border-color: #0d6dfd00 !important;
+    padding: 0 !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: white !important;
+}
+
+.btn-outline-primary:hover svg{
+    color: #23374D;
+}
+
 #eventsDropdown::after {
     display: none
 }
 
 .eventModalImg {
     width: 100%;
+    border-radius: .50rem;
 }
 
 .eventModal .modal-content{
@@ -312,13 +405,23 @@ html {
 
 .eventModalDate {
     text-align: center;
+    padding-top: 5px;
 }
 
 .eventModalTime {
     text-align: center;
+    padding-top: 5px;
 }
 
 /* Saved Events Styles */
 .eventItemRow img {
     width: 100%;
+}
+
+.savedEventItem {
+    margin: 20px 0 !important;
+}
+
+.savedEventItem img{
+    border-radius: .50rem;
 }

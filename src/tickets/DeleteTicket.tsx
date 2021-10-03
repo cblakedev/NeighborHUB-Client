@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { RiDeleteBinLine } from 'react-icons/ri'
 
 
 type DeleteTicketProps = {
@@ -41,7 +42,7 @@ class DeleteTicket extends Component<DeleteTicketProps, DeleteTicketState> {
         return (
             <div>
                 <div>
-                    <span onClick={(e) => this.handleDelete(e)}>Delete</span>
+                    <span onClick={(e) => this.handleDelete(e)}><RiDeleteBinLine />Delete</span>
                 </div>
             </div>
         )

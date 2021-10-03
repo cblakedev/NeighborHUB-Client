@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Modal, Button, Form, Dropdown, FormGroup } from 'react-bootstrap';
+import { Container, Row, Col, Modal, Button, Form, Dropdown} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DeletePost from './DeletePost'
+import {BsThreeDots} from 'react-icons/bs'
+import Moment from 'react-moment'
+import {AiOutlineEdit} from 'react-icons/ai'
+
 
 type FeedProps = {
     token: string | null
@@ -216,15 +220,18 @@ class Feed extends Component<FeedProps, FeedState> {
                             <Row key={post.id} className='feedposts'>
                                 <Col>
                                     <Row>
-                                        <Col className='postNameCol'>{post.AdminId ? <h4>Admin-{post.AdminId}</h4> : <h4>{post.User.FirstName}</h4>}</Col>
+                                        <Col xs={10} className='postNameCol'>
+                                            {post.AdminId ? <h4>Admin-{post.AdminId}</h4> : <h4>{post.User.FirstName}</h4>}
+                                            <i><Moment className='postTimeStamp' fromNow>{post.createdAt}</Moment></i>                      
+                                        </Col>
                                         {post.UserId && this.state.postData.userRole === 'Tenant'
                                             ? post.UserId === this.state.postData.userId
                                                 ?
-                                                <Col className='postDropdownCol'>
+                                                <Col xs={2} className='postDropdownCol'>
                                                     <Dropdown>
-                                                        <Dropdown.Toggle id="postDropdown"></Dropdown.Toggle>
+                                                        <Dropdown.Toggle variant='light' id="postDropdown"><BsThreeDots/></Dropdown.Toggle>
                                                         <Dropdown.Menu>
-                                                            <Dropdown.Item onClick={(e) => { this.handleUpdateShow(e); this.setState({ selectedPostId: post.id, selectedPost: post.Post }) }}>Edit</Dropdown.Item>
+                                                            <Dropdown.Item onClick={(e) => { this.handleUpdateShow(e); this.setState({ selectedPostId: post.id, selectedPost: post.Post }) }}><AiOutlineEdit/>Edit</Dropdown.Item>
                                                             <Dropdown.Item><DeletePost token={this.props.token} post={post} handleChangeCounter={this.handleChangeCounter} /></Dropdown.Item>
                                                         </Dropdown.Menu>
                                                     </Dropdown>
@@ -234,11 +241,11 @@ class Feed extends Component<FeedProps, FeedState> {
 
                                         {this.state.postData.userRole === 'Admin'
                                             ?
-                                            <Col className='postDropdownCol'>
+                                            <Col xs={2} className='postDropdownCol'>
                                                 <Dropdown>
-                                                    <Dropdown.Toggle id="postDropdown"></Dropdown.Toggle>
+                                                <Dropdown.Toggle variant='light' id="postDropdown"><BsThreeDots/></Dropdown.Toggle>
                                                     <Dropdown.Menu>
-                                                        <Dropdown.Item onClick={(e) => { this.handleUpdateShow(e); this.setState({ selectedPostId: post.id, selectedPost: post.Post }) }}>Edit</Dropdown.Item>
+                                                        <Dropdown.Item onClick={(e) => { this.handleUpdateShow(e); this.setState({ selectedPostId: post.id, selectedPost: post.Post }) }}><AiOutlineEdit/>Edit</Dropdown.Item>
                                                         <Dropdown.Item><DeletePost token={this.props.token} post={post} handleChangeCounter={this.handleChangeCounter} /></Dropdown.Item>
                                                     </Dropdown.Menu>
                                                 </Dropdown>
@@ -272,11 +279,11 @@ class Feed extends Component<FeedProps, FeedState> {
                         {this.state.selectedPost
                             ?
                             <Button className='mt-3' variant="primary" onClick={(e) => this.handleUpdateFetch(e)}>
-                                Edit
+                                <AiOutlineEdit/>Edit
                             </Button>
                             :
                             <Button className='mt-3' variant="primary" disabled>
-                                Edit
+                                <AiOutlineEdit/>Edit
                             </Button>
                         }
 

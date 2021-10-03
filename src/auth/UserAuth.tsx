@@ -31,8 +31,7 @@ class UserAuth extends Component<UserAuthProps, UserAuthState> {
                         </Tab>
                         <Tab eventKey='register' title='Register'>
                             <UserRegister updateToken={this.props.updateToken} />
-                        </Tab>
-                        <Tab disabled eventKey='tenantInfo' title='Tenant Portal'></Tab>     
+                        </Tab>   
                     </Tabs>
                     
                 </Row>

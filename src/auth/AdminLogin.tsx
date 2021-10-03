@@ -75,6 +75,12 @@ class AdminLogin extends Component<AdminLoginProps, AdminLoginState> {
         return (
             <Container>
                 <Row>
+                    <Col>
+                        <h1 className='appTitle'>NeighborHUB</h1>
+                        <h3 className='appUser'>Admin Portal</h3>
+                    </Col>
+                </Row>
+                <Row>
                     <Form noValidate validated={this.state.validated} onSubmit={(e) => this.handleSubmit(e)}>
                         <Form.Group className='mt-3' as={Col} xs='12' controlId='validationCustom08'>
                             <Form.Control
