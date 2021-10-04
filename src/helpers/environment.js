@@ -1,3 +1,5 @@
+/* Allows the code base to recognize if app is running locally or through Heroku */
+
 let APIURL = '';
 
 switch (window.location.hostname) {
@@ -7,7 +9,7 @@ switch (window.location.hostname) {
         break;
 
     default :
-        APIURL = 'https://neighborhub-server.herokuapp.com'
+        APIURL = 'https://neighborhub-server.herokuapp.com/'
       
 }
 

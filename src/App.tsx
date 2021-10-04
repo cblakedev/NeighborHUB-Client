@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Auth from '../src/auth/Auth'
-import Home from '../src/home/Home'
-import WebFont from 'webfontloader'
-import { Spinner } from 'react-bootstrap'
+import Auth from '../src/auth/Auth';
+import Home from '../src/home/Home';
+import WebFont from 'webfontloader';
+
 
 type AppProp = {
 

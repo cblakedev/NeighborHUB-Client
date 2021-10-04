@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
-import { AllPostsType } from './Feed'
-import { RiDeleteBinLine } from 'react-icons/ri'
+import React, { Component } from 'react';
+import { AllPostsType } from './Feed';
+import { RiDeleteBinLine } from 'react-icons/ri';
+import APIURL from '../helpers/environment';
 
 type DeletePostProps = {
     post: AllPostsType
@@ -20,7 +21,7 @@ class DeletePost extends Component<DeletePostProps, DeletePostState> {
     }
 
     handleDelete = (e: React.MouseEvent): void => {
-        fetch(`http://localhost:5000/post/deletepost/${this.props.post.id}`, {
+        fetch(`${APIURL}post/deletepost/${this.props.post.id}`, {
             method: 'DELETE',
             headers: new Headers({
                 'Content-type': 'application/json',
@@ -30,12 +31,12 @@ class DeletePost extends Component<DeletePostProps, DeletePostState> {
             .then((res) => res.json())
             .then((data) => {
                 this.props.handleChangeCounter()
-                console.log(data)
             })
     }
 
     render() {
         return (
+            /* Handles Deletion for each post. */
             <div>
                 <span onClick={(e) => this.handleDelete(e)}><RiDeleteBinLine />Delete</span>
             </div>

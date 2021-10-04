@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import AdminAuth from './AdminAuth'
-import UserAuth from './UserAuth'
+import AdminAuth from './AdminAuth';
+import UserAuth from './UserAuth';
 
 type AuthProps = {
     updateToken: (newToken: string, role: string) => void

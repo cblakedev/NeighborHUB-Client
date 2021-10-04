@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Modal, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { RiDeleteBinLine } from 'react-icons/ri'
-import { ImTicket } from 'react-icons/im'
+import { RiDeleteBinLine } from 'react-icons/ri';
+import { ImTicket } from 'react-icons/im';
+import APIURL from '../helpers/environment';
 
 type SavedEventsProps = {
     token: string | null
@@ -66,7 +67,7 @@ class SavedEvents extends Component<SavedEventsProps, SavedEventsState> {
     }
 
     deleteEvent = (): void => {
-        fetch(`http://localhost:5000/event/deleteevent/${this.state.eventId}`, {
+        fetch(`${APIURL}event/deleteevent/${this.state.eventId}`, {
             method: 'DELETE',
             headers: new Headers({
                 'Content-type': 'application/json',
@@ -82,7 +83,7 @@ class SavedEvents extends Component<SavedEventsProps, SavedEventsState> {
     }
 
     componentDidMount(): void {
-        fetch(`http://localhost:5000/event/myevents`, {
+        fetch(`${APIURL}event/myevents`, {
             method: 'GET',
             headers: new Headers({
                 'Content-type': 'application/json',
@@ -94,13 +95,12 @@ class SavedEvents extends Component<SavedEventsProps, SavedEventsState> {
                 this.setState({
                     userEvents: data.userEvents
                 })
-                console.log(this.state.userEvents)
             })
     }
 
     componentDidUpdate(PrevProps: SavedEventsProps, PrevState: SavedEventsState): void {
         if (PrevProps.eventChangeCounter !== this.props.eventChangeCounter) {
-            fetch(`http://localhost:5000/event/myevents`, {
+            fetch(`${APIURL}event/myevents`, {
                 method: 'GET',
                 headers: new Headers({
                     'Content-type': 'application/json',
@@ -112,7 +112,6 @@ class SavedEvents extends Component<SavedEventsProps, SavedEventsState> {
                     this.setState({
                         userEvents: data.userEvents
                     })
-                    console.log(this.state.userEvents)
                 })
         }
     }
@@ -127,6 +126,8 @@ class SavedEvents extends Component<SavedEventsProps, SavedEventsState> {
                         </h2>
                     </Col>
                 </Row>
+
+                {/* Saved events list */}
                 <Row className='eventItemRow'>
                     {this.state.userEvents
                         ?
@@ -152,6 +153,8 @@ class SavedEvents extends Component<SavedEventsProps, SavedEventsState> {
                         undefined}
 
                 </Row>
+
+                {/* Modal for each saved event */}
                 <Modal className='eventModal' show={this.state.showModal} onHide={() => this.handleCloseEvent()}>
                     <Modal.Header closeButton>
                         <Modal.Title>{this.state.eventName}</Modal.Title>

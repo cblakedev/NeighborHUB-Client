@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Form, Button, Modal, Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { UserType } from '../App'
-import DeleteTicket from './DeleteTicket'
-import { Spinner } from 'react-bootstrap'
-import { FaCheckCircle } from 'react-icons/fa'
-import { BsThreeDots } from 'react-icons/bs'
-import Moment from 'react-moment'
-import { AiOutlineEdit } from 'react-icons/ai'
-import { IoIosCreate } from 'react-icons/io'
-import { FiSend } from 'react-icons/fi'
+import { UserType } from '../App';
+import DeleteTicket from './DeleteTicket';
+import { Spinner } from 'react-bootstrap';
+import { FaCheckCircle } from 'react-icons/fa';
+import { BsThreeDots } from 'react-icons/bs';
+import Moment from 'react-moment';
+import { AiOutlineEdit } from 'react-icons/ai';
+import { IoIosCreate } from 'react-icons/io';
+import { FiSend } from 'react-icons/fi';
+import APIURL from '../helpers/environment';
 
 type TicketsProps = {
     token: string | null
@@ -112,7 +113,7 @@ class Tickets extends Component<TicketsProps, TicketsState> {
 
     handleFetch = (): void => {
         if (this.state.ticketTitle && this.state.ticketDescription) {
-            fetch(`http://localhost:5000/ticket/create`, {
+            fetch(`${APIURL}ticket/create`, {
                 method: 'POST',
                 body: JSON.stringify({
                     ticket: {
@@ -128,7 +129,6 @@ class Tickets extends Component<TicketsProps, TicketsState> {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log(data)
                     this.handleClose();
                     this.setState({
                         ticketTitle: '',
@@ -145,7 +145,7 @@ class Tickets extends Component<TicketsProps, TicketsState> {
 
         if (this.state.selectedTicketTitle && this.state.selectedTicketDescription) {
             if (this.props.role === 'Tenant') {
-                fetch(`http://localhost:5000/ticket/updateticket/${this.state.selectedTicketId}`, {
+                fetch(`${APIURL}ticket/updateticket/${this.state.selectedTicketId}`, {
                     method: 'PUT',
                     body: JSON.stringify({
                         ticket: {
@@ -161,7 +161,6 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                 })
                     .then((res) => res.json())
                     .then((data) => {
-                        console.log(data)
                         this.setState({
                             selectedTicketTitle: '',
                             selectedTicketDescription: '',
@@ -172,7 +171,7 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                     })
 
             } else if (this.props.role === 'Admin') {
-                fetch(`http://localhost:5000/ticket/updateticket/${this.state.selectedTicketId}`, {
+                fetch(`${APIURL}ticket/updateticket/${this.state.selectedTicketId}`, {
                     method: 'PUT',
                     body: JSON.stringify({
                         ticket: {
@@ -190,7 +189,6 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                 })
                     .then((res) => res.json())
                     .then((data) => {
-                        console.log(data)
                         this.setState({
                             selectedTicketTitle: '',
                             selectedTicketDescription: '',
@@ -207,7 +205,7 @@ class Tickets extends Component<TicketsProps, TicketsState> {
 
     componentDidMount(): void {
         if (this.props.role === 'Tenant') {
-            fetch(`http://localhost:5000/ticket/mytickets`, {
+            fetch(`${APIURL}ticket/mytickets`, {
                 method: 'GET',
                 headers: new Headers({
                     'Content-type': 'application/json',
@@ -223,10 +221,10 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                     this.setState({
                         ticketData: data.myTickets
                     })
-                    console.log(data.myTickets)
                 })
+
         } else if (this.props.role === 'Admin') {
-            fetch(`http://localhost:5000/ticket/admin/alltickets`, {
+            fetch(`${APIURL}ticket/admin/alltickets`, {
                 method: 'GET',
                 headers: new Headers({
                     'Content-type': 'application/json',
@@ -241,7 +239,6 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                     this.setState({
                         ticketData: data.allTickets
                     })
-                    console.log(data)
                 })
         }
     }
@@ -249,7 +246,7 @@ class Tickets extends Component<TicketsProps, TicketsState> {
     componentDidUpdate(prevProps: TicketsProps, prevState: TicketsState): void {
         if (prevState.changeCounter !== this.state.changeCounter) {
             if (this.props.role === 'Tenant') {
-                fetch(`http://localhost:5000/ticket/mytickets`, {
+                fetch(`${APIURL}ticket/mytickets`, {
                     method: 'GET',
                     headers: new Headers({
                         'Content-type': 'application/json',
@@ -269,7 +266,7 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                     })
 
             } else if (this.props.role === 'Admin') {
-                fetch(`http://localhost:5000/ticket/admin/alltickets`, {
+                fetch(`${APIURL}ticket/admin/alltickets`, {
                     method: 'GET',
                     headers: new Headers({
                         'Content-type': 'application/json',
@@ -301,6 +298,8 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                         <Button className='createTicketBtn' variant='primary' onClick={this.handleShow}>
                             <IoIosCreate /> New Ticket
                         </Button>
+
+                        {/* Create new ticket modal. */}
                         <Modal show={this.state.showModal} onHide={this.handleClose}>
                             <Modal.Header closeButton>
                                 <Modal.Title>Create Ticket</Modal.Title>
@@ -350,6 +349,8 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                         </Modal>
                     </Col>
                 </Row>
+
+                {/* Created or saved tickets list */}
                 {this.state.ticketData
                     ?
                     this.state.ticketData.map((ticket) => {
@@ -407,6 +408,8 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                     })
                     : undefined
                 }
+
+                {/* Modal for each ticket in the list */}
                 <Modal show={this.state.updateModalShow} onHide={this.handleUpdateClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Edit Ticket</Modal.Title>

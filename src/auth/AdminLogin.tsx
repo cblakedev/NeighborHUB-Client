@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import APIURL from '../helpers/environment';
 
 type AdminLoginProps = {
     updateToken: (newToken: string, role: string) => void
@@ -29,7 +30,7 @@ class AdminLogin extends Component<AdminLoginProps, AdminLoginState> {
         });
         
         if (this.state.email && this.state.password) {
-            fetch('http://localhost:5000/admin/login', {
+            fetch(`${APIURL}admin/login`, {
                 method: 'POST',
                 body: JSON.stringify({
                     admin: {
@@ -80,6 +81,8 @@ class AdminLogin extends Component<AdminLoginProps, AdminLoginState> {
                         <h4 className='appUserAdmin'>Admin Portal</h4>
                     </Col>
                 </Row>
+
+                {/* Admin Login Form*/}
                 <Row>
                     <Form noValidate validated={this.state.validated} onSubmit={(e) => this.handleSubmit(e)}>
                         <Form.Group className='mt-3' as={Col} xs='12' controlId='validationCustom08'>

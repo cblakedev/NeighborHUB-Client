@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import APIURL from '../helpers/environment';
 
 
 type UserLoginProps = {
@@ -31,7 +32,7 @@ class UserLogin extends Component<UserLoginProps, UserLoginState> {
         });
 
         if (this.state.email && this.state.password) {
-            fetch('http://localhost:5000/user/login', {
+            fetch(`${APIURL}user/login`, {
                 method: 'POST',
                 body: JSON.stringify({
                     user: {
@@ -82,6 +83,8 @@ class UserLogin extends Component<UserLoginProps, UserLoginState> {
                         <h4 className='appUser'>Tenant Portal</h4>
                     </Col>
                 </Row>
+
+                {/* User Login Form */}
                 <Row className='loginWrapper'>
                     <Form noValidate validated={this.state.validated} onSubmit={(e) => this.handleSubmit(e)}>
                         <Form.Group className='mt-3' as={Col} md='12' controlId='validationCustom01'>

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Row, Col, Button, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BsPlusCircle } from 'react-icons/bs'
-import { ImTicket } from 'react-icons/im'
-import { RiBookmark3Line } from 'react-icons/ri'
+import { BsPlusCircle } from 'react-icons/bs';
+import { ImTicket } from 'react-icons/im';
+import { RiBookmark3Line } from 'react-icons/ri';
+import APIURL from '../helpers/environment';
+import env from "react-dotenv";
 
 type EventsProps = {
     token: string | null
@@ -64,7 +66,7 @@ class Events extends Component<EventsProps, EventsState> {
     }
 
     saveEvent = () => {
-        fetch(`http://localhost:5000/event/create`, {
+        fetch(`${APIURL}event/create`, {
             method: 'POST',
             body: JSON.stringify({
                 event: {
@@ -82,7 +84,6 @@ class Events extends Component<EventsProps, EventsState> {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data)
                 this.props.eventUpdateCounter()
                 this.handleCloseEvent()
             })
@@ -90,13 +91,12 @@ class Events extends Component<EventsProps, EventsState> {
 
 
     componentDidMount() {
-        fetch(`https://app.ticketmaster.com/discovery/v2/events.json?dmaId=303&sort=date,asc&size=50&apikey=4HGjWgd6muYekVCVQmKoYScIKKbzXbni`)
+        fetch(`https://app.ticketmaster.com/discovery/v2/events.json?dmaId=303&sort=date,asc&size=50&apikey=${env.API_KEY}`)
             .then((res) => res.json())
             .then((data) => {
                 this.setState({
                     eventData: data
                 })
-                console.log(this.state.eventData._embedded.events)
             })
     }
 
@@ -104,6 +104,8 @@ class Events extends Component<EventsProps, EventsState> {
         return (
             <>
                 <h2 className='upcomingEventsTitle'>Upcoming Events</h2>
+
+                {/* Mapped Events */}
                 {
                     this.state.eventData._embedded
                         ?
@@ -133,6 +135,7 @@ class Events extends Component<EventsProps, EventsState> {
                         undefined
                 }
 
+                {/* Modal for each mapped event */}
                 <Modal className='eventModal' show={this.state.showModal} onHide={() => this.handleCloseEvent()}>
                     <Modal.Header closeButton>
                         <Modal.Title>{this.state.eventName}</Modal.Title>

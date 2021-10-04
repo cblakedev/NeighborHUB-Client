@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Modal, Button, Form, Dropdown, Offcanvas } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import DeletePost from './DeletePost'
-import { BsThreeDots } from 'react-icons/bs'
-import Moment from 'react-moment'
-import { AiOutlineEdit } from 'react-icons/ai'
-import { IoIosCreate } from 'react-icons/io'
-import Events from '../events/Events'
-import { BiCalendarEvent } from 'react-icons/bi'
+import DeletePost from './DeletePost';
+import { BsThreeDots } from 'react-icons/bs';
+import Moment from 'react-moment';
+import { AiOutlineEdit } from 'react-icons/ai';
+import { IoIosCreate } from 'react-icons/io';
+import Events from '../events/Events';
+import { BiCalendarEvent } from 'react-icons/bi';
+import APIURL from '../helpers/environment';
 
 
 type FeedProps = {
@@ -111,7 +112,7 @@ class Feed extends Component<FeedProps, FeedState> {
 
     handleFetch = (): void => {
         if (this.state.post) {
-            fetch('http://localhost:5000/post/create', {
+            fetch(`${APIURL}post/create`, {
                 method: 'POST',
                 body: JSON.stringify({
                     feed: {
@@ -135,7 +136,7 @@ class Feed extends Component<FeedProps, FeedState> {
     }
 
     handleUpdateFetch = (e: React.MouseEvent): any => {
-        fetch(`http://localhost:5000/post/${this.state.selectedPostId}`, {
+        fetch(`${APIURL}post/${this.state.selectedPostId}`, {
             method: 'PUT',
             body: JSON.stringify({
                 feed: {
@@ -151,12 +152,11 @@ class Feed extends Component<FeedProps, FeedState> {
             .then((data) => {
                 this.handleChangeCounter()
                 this.handleUpdateClose()
-                console.log(data)
             })
     }
 
     componentDidMount(): void {
-        fetch('http://localhost:5000/post/allposts', {
+        fetch(`${APIURL}post/allposts`, {
             method: 'GET',
             headers: new Headers({
                 'Content-type': 'application/json',
@@ -171,13 +171,12 @@ class Feed extends Component<FeedProps, FeedState> {
                 this.setState({
                     postData: data
                 })
-                console.log(data)
             })
     }
 
     componentDidUpdate(prevProps: FeedProps, prevState: FeedState) {
         if (prevState.changeCounter !== this.state.changeCounter) {
-            fetch('http://localhost:5000/post/allposts', {
+            fetch(`${APIURL}post/allposts`, {
                 method: 'GET',
                 headers: new Headers({
                     'Content-type': 'application/json',
@@ -192,18 +191,21 @@ class Feed extends Component<FeedProps, FeedState> {
                     this.setState({
                         postData: data
                     })
-                    console.log(data)
-                })
+                });
         }
     }
 
     render() {
         return (
             <Container className='mainFeedWrapper'>
+
+                {/* Create new post bar. */}
                 <Row className='feedWrapper'>
                     <Col className='postBox rounded-pill' onClick={(e) => this.handleShow(e)}>
                         <p>Start a post</p>
                     </Col>
+
+                    {/* Responsive events button that activates for smaller viewports. */}
                     <Row className='eventCanvasBtnRow'>
                         <Col className='eventCanvasBtnCol'>
                             <Button className='eventCanvasBtn' variant="outline-success" onClick={() => this.handleCanvasShow()}><BiCalendarEvent />Events</Button>
@@ -211,6 +213,7 @@ class Feed extends Component<FeedProps, FeedState> {
                     </Row>
                 </Row>
 
+                {/* Create new post modal */}
                 <Modal show={this.state.modalShow} onHide={this.handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Create a post</Modal.Title>
@@ -236,6 +239,7 @@ class Feed extends Component<FeedProps, FeedState> {
                     </Modal.Body>
                 </Modal>
 
+                {/* All mapped posts within the feed. */}
                 {this.state.postData.AllPosts
                     ?
                     this.state.postData.AllPosts.map((post) => {
@@ -252,7 +256,7 @@ class Feed extends Component<FeedProps, FeedState> {
                                                 ?
                                                 <Col xs={2} className='postDropdownCol'>
                                                     <Dropdown>
-                                                        <Dropdown.Toggle variant='light' id="postDropdown"><BsThreeDots /></Dropdown.Toggle>
+                                                        <Dropdown.Toggle variant='light' id="postDropdown"><BsThreeDots /></Dropdown.Toggle> {/* Dropdown menu for each post */}
                                                         <Dropdown.Menu>
                                                             <Dropdown.Item onClick={(e) => { this.handleUpdateShow(e); this.setState({ selectedPostId: post.id, selectedPost: post.Post }) }}><AiOutlineEdit />Edit</Dropdown.Item>
                                                             <Dropdown.Item><DeletePost token={this.props.token} post={post} handleChangeCounter={this.handleChangeCounter} /></Dropdown.Item>
@@ -266,7 +270,7 @@ class Feed extends Component<FeedProps, FeedState> {
                                             ?
                                             <Col xs={2} className='postDropdownCol'>
                                                 <Dropdown>
-                                                    <Dropdown.Toggle variant='light' id="postDropdown"><BsThreeDots /></Dropdown.Toggle>
+                                                    <Dropdown.Toggle variant='light' id="postDropdown"><BsThreeDots /></Dropdown.Toggle> {/* Dropdown menu for each post */}
                                                     <Dropdown.Menu>
                                                         <Dropdown.Item onClick={(e) => { this.handleUpdateShow(e); this.setState({ selectedPostId: post.id, selectedPost: post.Post }) }}><AiOutlineEdit />Edit</Dropdown.Item>
                                                         <Dropdown.Item><DeletePost token={this.props.token} post={post} handleChangeCounter={this.handleChangeCounter} /></Dropdown.Item>
@@ -276,6 +280,7 @@ class Feed extends Component<FeedProps, FeedState> {
                                             : undefined}
                                     </Row>
 
+                                    {/* Body of each post. */}
                                     <Row className='postBody'>
                                         <Col>
                                             <p>{post.Post}</p>
@@ -288,6 +293,7 @@ class Feed extends Component<FeedProps, FeedState> {
                     :
                     undefined}
 
+                {/* Update modal for each post. */}
                 <Modal show={this.state.updateModalShow} onHide={() => this.handleUpdateClose()}>
                     <Modal.Header closeButton>
                         <Modal.Title>Edit Post</Modal.Title>
@@ -309,10 +315,10 @@ class Feed extends Component<FeedProps, FeedState> {
                                 <AiOutlineEdit />Edit
                             </Button>
                         }
-
                     </Modal.Body>
                 </Modal>
 
+                {/* Responsive canvas that activates for smaller viewports. Toggleable by responsive events button. */}
                 <Offcanvas placement='end' show={this.state.showCanvas} onHide={() => this.handleCanvasClose()}>
                     <Offcanvas.Header closeButton></Offcanvas.Header>
                     <Offcanvas.Body>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import APIURL from '../helpers/environment';
 
 type UserRegisterProps = {
     updateToken: (newToken: string, role: string) => void
@@ -29,8 +30,9 @@ class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
 
     handleFetch = (): void => {
         const { email, password, firstName, lastName, unitNumber } = this.state
+
         if (email && password && firstName && lastName && unitNumber) {
-            fetch('http://localhost:5000/user/register', {
+            fetch(`${APIURL}user/register`, {
                 method: 'POST',
                 body: JSON.stringify({
                     user: {
@@ -80,6 +82,8 @@ class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
                         <h4 className='appUser'>Tenant Portal</h4>
                     </Col>
                 </Row>
+
+                {/* User Register Form */}
                 <Row>
                     <Form noValidate validated={this.state.validated} onSubmit={(e) => this.handleSubmit(e)}>
                         <Row>
@@ -130,7 +134,7 @@ class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
                                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 <Form.Control.Feedback type='invalid'>Please enter your last name.</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group className='mt-3' as={Col} xs='6' controlId='validationCustom07'>        
+                            <Form.Group className='mt-3' as={Col} xs='6' controlId='validationCustom07'>
                                 <Form.Control
                                     required
                                     type="text"

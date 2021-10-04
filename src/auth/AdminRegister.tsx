@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import APIURL from '../helpers/environment';
 
 type AdminRegisterProps = {
     updateToken: (newToken: string, role: string) => void
@@ -29,7 +30,7 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
         const { email, password, firstName, lastName } = this.state
         
         if (email && password && firstName && lastName) {
-            fetch('http://localhost:5000/admin/register', {
+            fetch(`${APIURL}admin/register`, {
                 method: 'POST',
                 body: JSON.stringify({
                     admin: {
@@ -77,6 +78,8 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
                         <h4 className='appUserAdmin'>Admin Portal</h4>
                     </Col>
                 </Row>
+
+                {/* Admin Register Form */}
                 <Row>
                     <Form noValidate validated={this.state.validated} onSubmit={(e) => this.handleSubmit(e)}>
                         <Row>

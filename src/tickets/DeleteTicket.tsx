@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { RiDeleteBinLine } from 'react-icons/ri'
+import { RiDeleteBinLine } from 'react-icons/ri';
+import APIURL from '../helpers/environment';
 
 
 type DeleteTicketProps = {
@@ -24,7 +25,7 @@ class DeleteTicket extends Component<DeleteTicketProps, DeleteTicketState> {
     handleDelete = (e: React.MouseEvent): void => {
         e.preventDefault()
 
-        fetch(`http://localhost:5000/ticket/deleteticket/${this.props.ticketId}`, {
+        fetch(`${APIURL}ticket/deleteticket/${this.props.ticketId}`, {
             method: 'DELETE',
             headers: new Headers({
                 'Content-type': 'application/json',
@@ -33,7 +34,6 @@ class DeleteTicket extends Component<DeleteTicketProps, DeleteTicketState> {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data)
                 this.props.handleChangeCounter();
             })
     }
@@ -41,6 +41,7 @@ class DeleteTicket extends Component<DeleteTicketProps, DeleteTicketState> {
     render() {
         return (
             <div>
+                {/* Handles the delete function of each ticket */}
                 <div>
                     <span onClick={(e) => this.handleDelete(e)}><RiDeleteBinLine />Delete</span>
                 </div>
