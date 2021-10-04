@@ -16,13 +16,27 @@ html {
     border-color: #23374D !important;
 }
 
-h2 {
+h1, h2, h3{
     color: #23374D;
+    font-family: 'Poppins', 'sans-serif';
+    font-weight: 700 !important;
 }
 
-h4{
+h4 {
     color: #23374D;
+    font-family: 'Lato', 'sans-serif';
+    font-weight: 600 !important;
+    font-size: 1.2rem !important;
 }
+
+h5 {
+    color: #23374D;
+    font-family: 'Lato', 'sans-serif';
+    font-weight: 600 !important;
+}
+
+
+
 
 /* Auth Styles */
 .appTitle {
@@ -33,6 +47,11 @@ h4{
 .appUser {
     text-align: center;
     color: #23374D;
+}
+
+.appUserAdmin {
+    text-align: center;
+    color: #EB8242;
 }
 
 .nav-link {
@@ -110,8 +129,38 @@ h4{
 
 /* Home Nav Styles */
 .headerBar {
+    position: relative;
     background-color: white;
     box-shadow: 0 0 10px 1px rgb(196, 196, 196);
+    padding: 7px 0;
+}
+
+.headerBar svg {
+    position: absolute;
+    left: 10px;
+    font-size: 1.8rem;
+    display: none;
+}
+
+.headerBar svg:hover {
+    color: #1089FF;
+    cursor: pointer;
+}
+
+.headerTitle {
+    float: right;
+    margin: auto;
+    padding-right: 10px;
+}
+
+.headerTitle a {
+    text-decoration: none !important;
+    color: #23374D;
+}
+
+.headerTitle a:hover {
+    color: #1089FF;
+    cursor: pointer;
 }
 
 .homeLinks {
@@ -126,6 +175,14 @@ h4{
     padding-top: 20px;
     box-shadow: 0 0 10px 1px rgb(196, 196, 196);
     border: 1px solid #adb5bd;
+}
+
+.navLinksCanvas {
+    max-width: 200px !important;
+}
+
+.navLinksCanvasBody {
+    margin: auto;
 }
 
 .navItems {
@@ -157,7 +214,11 @@ h4{
     position: absolute;
     bottom: 10px;
     left: 50%;
-    margin-left: -45px !important;
+    margin-left: -47px !important;
+}
+
+.logoutBtnWrapper svg {
+    margin: 0 3px 4px 0;
 }
 
 .routerViews {
@@ -181,6 +242,7 @@ h4{
 /* Feed Styles */
 .feedWrapper {
     border-bottom: 1px solid #bbbbbb;
+    padding-bottom: 10px !important;
 }
 
 .dropdown-toggle::after {
@@ -191,7 +253,7 @@ h4{
 .postBox {
     border: 1px solid rgb(168, 168, 168);
     background-color: white;
-    margin-bottom: 20px !important;
+    margin-bottom: 10px !important;
     box-shadow: 0 0 10px 1px rgb(196, 196, 196);
 }
 
@@ -205,12 +267,40 @@ h4{
     padding: 10px
 }
 
+.eventCanvasBtnRow {
+    margin: auto !important;
+}
+
+.eventCanvasBtnCol {
+    text-align: center;
+    display: none;
+}
+
+.eventCanvasBtn {
+    border: none !important;
+    padding: 0 !important;
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+}
+
+.eventCanvasBtn svg {
+    margin: 0 3px 4px 0;
+}
+
 .modal-footer {
     border-top: none !important;
 }
 
+.modalFeedBody svg{
+    margin: 0 0 4px 0;
+}
+
 .modalFeedText {
     height: 100px;
+}
+
+.feedModalBody svg{
+    margin: 0 3px 4px 0;
 }
 
 .feedposts {
@@ -273,6 +363,10 @@ h4{
     font-size: 1.5rem;
 }
 
+.postDropdownCol svg {
+    margin: 0 3px 4px 0;
+}
+
 
 .btn-light {
     background-color: white !important;
@@ -281,15 +375,20 @@ h4{
 
 /* Ticket Styles */
 .ticketFeedTitleWrapper {
-    margin: 0 10px !important;
+    padding-top: 10px;
 }
 
-.createTicketCol {
-    margin: 0 10px !important;
+.ticketFeedTitleWrapper h2{
+    margin: 0;
 }
 
 .createTicketBtn {
     float: right;
+    margin: 5px 0;
+}
+
+.createTicketBtn svg{
+    margin: 0 0 4px 0;
 }
 
 .ticketWrapper {
@@ -325,14 +424,26 @@ h4{
     color: green;
 }
 
+.createTicketModalBody svg {
+    margin: 0 0 4px 0;
+}
+
 .ticketModalButton {
     margin-right: 10px;
+}
+
+.ticketModalButton svg {
+    margin: 0 3px 4px 0;
+}
+
+.ticketDropdownCol svg {
+    margin: 0 3px 4px 0;
 }
 
 /* Events Feed Styles */
 .upcomingEventsTitle {
     border-bottom: 1px solid #bbbbbb;
-    padding-bottom: 8px;
+    padding: 8px 0;
 }
 
 .eventViews {
@@ -357,10 +468,6 @@ h4{
     border-radius: .50rem;
 }
 
-.eventWrapper a {
-
-}
-
 .eventWrapper svg {
     float: right;
     font-size: 2.3rem;
@@ -379,6 +486,7 @@ h4{
     color: #1089FF !important;
     border-color: #0d6dfd00 !important;
     padding: 0 !important;
+    border-radius: 20px !important;
 }
 
 .btn-outline-primary:hover {
@@ -403,6 +511,10 @@ h4{
    margin: auto;
 }
 
+.eventModal svg {
+    margin: 0 3px 4px 0;
+}
+
 .eventModalDate {
     text-align: center;
     padding-top: 5px;
@@ -414,6 +526,10 @@ h4{
 }
 
 /* Saved Events Styles */
+.savedEventsTitle {
+    margin-bottom: 0;
+}
+
 .eventItemRow img {
     width: 100%;
 }
@@ -424,4 +540,44 @@ h4{
 
 .savedEventItem img{
     border-radius: .50rem;
+    height: 175px;
 }
+
+/* Responsiveness Styles */
+
+@media only screen and (max-width: 1200px) {
+    .homeLinks {
+        display: none;
+    }
+
+    .headerBar svg {
+        display: block;
+    }
+  }
+
+@media only screen and (max-width: 992px) {
+    .savedEventItem img {
+        height: 120px;
+    }
+  }
+
+@media only screen and (max-width: 767px) {
+    .eventViews {
+        display: none;
+    }
+
+    .eventCanvasBtnCol {
+        display: block;
+    }
+
+    .routerViews {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+  }
+
+  @media only screen and (max-width: 575px) {
+    .savedEventItem img {
+        height: auto;
+    }
+  }

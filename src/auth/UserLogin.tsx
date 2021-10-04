@@ -79,7 +79,7 @@ class UserLogin extends Component<UserLoginProps, UserLoginState> {
                 <Row>
                     <Col>
                         <h1 className='appTitle'>NeighborHUB</h1>
-                        <h3 className='appUser'>Tenant Portal</h3>
+                        <h4 className='appUser'>Tenant Portal</h4>
                     </Col>
                 </Row>
                 <Row className='loginWrapper'>

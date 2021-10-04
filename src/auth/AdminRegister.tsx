@@ -74,7 +74,7 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
                 <Row>
                     <Col>
                         <h1 className='appTitle'>NeighborHUB</h1>
-                        <h3 className='appUser'>Admin Portal</h3>
+                        <h4 className='appUserAdmin'>Admin Portal</h4>
                     </Col>
                 </Row>
                 <Row>

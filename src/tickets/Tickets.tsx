@@ -8,6 +8,8 @@ import { FaCheckCircle } from 'react-icons/fa'
 import { BsThreeDots } from 'react-icons/bs'
 import Moment from 'react-moment'
 import { AiOutlineEdit } from 'react-icons/ai'
+import { IoIosCreate } from 'react-icons/io'
+import { FiSend } from 'react-icons/fi'
 
 type TicketsProps = {
     token: string | null
@@ -44,7 +46,6 @@ type ExistingTicket = {
     resolving: null | boolean
     updatedAt: string
 }
-
 
 class Tickets extends Component<TicketsProps, TicketsState> {
     constructor(props: TicketsProps) {
@@ -201,9 +202,7 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                         this.handleChangeCounter()
                     })
             }
-
         }
-
     }
 
     componentDidMount(): void {
@@ -245,7 +244,6 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                     console.log(data)
                 })
         }
-
     }
 
     componentDidUpdate(prevProps: TicketsProps, prevState: TicketsState): void {
@@ -296,18 +294,18 @@ class Tickets extends Component<TicketsProps, TicketsState> {
         return (
             <Container className='mainFeedWrapper'>
                 <Row className='feedWrapper'>
-                    <Col className='ticketFeedTitleWrapper'>
+                    <Col xs={3} className='ticketFeedTitleWrapper'>
                         <h2>Tickets</h2>
                     </Col>
                     <Col className='createTicketCol'>
                         <Button className='createTicketBtn' variant='primary' onClick={this.handleShow}>
-                            Create Ticket
+                            <IoIosCreate /> New Ticket
                         </Button>
                         <Modal show={this.state.showModal} onHide={this.handleClose}>
                             <Modal.Header closeButton>
                                 <Modal.Title>Create Ticket</Modal.Title>
                             </Modal.Header>
-                            <Modal.Body>
+                            <Modal.Body className='createTicketModalBody'>
                                 <Form noValidate validated={this.state.validated} onSubmit={(e) => this.handleCreate(e)}>
                                     <Form.Group as={Col} md='12' controlId='ticketcontrol1'>
                                         <Form.Control
@@ -345,7 +343,7 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                                         <Form.Control.Feedback type='invalid'>Ticket description required.</Form.Control.Feedback>
                                     </Form.Group>
                                     <Button type='submit' className='mt-3' variant='primary'>
-                                        Submit Ticket
+                                        <FiSend /> Submit Ticket
                                     </Button>
                                 </Form>
                             </Modal.Body>
@@ -444,7 +442,7 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                                     <AiOutlineEdit />Edit
                                 </Button>
                                 :
-                                <Button className='mt-3' variant="primary" type='submit' disabled>
+                                <Button className='mt-3 ticketModalButton' variant="primary" type='submit' disabled>
                                     <AiOutlineEdit />Edit
                                 </Button>
                             }

@@ -77,7 +77,7 @@ class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
                 <Row>
                     <Col>
                         <h1 className='appTitle'>NeighborHUB</h1>
-                        <h3 className='appUser'>Tenant Portal</h3>
+                        <h4 className='appUser'>Tenant Portal</h4>
                     </Col>
                 </Row>
                 <Row>

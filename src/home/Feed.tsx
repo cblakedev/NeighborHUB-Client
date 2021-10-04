@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Modal, Button, Form, Dropdown} from 'react-bootstrap';
+import { Container, Row, Col, Modal, Button, Form, Dropdown, Offcanvas } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DeletePost from './DeletePost'
-import {BsThreeDots} from 'react-icons/bs'
+import { BsThreeDots } from 'react-icons/bs'
 import Moment from 'react-moment'
-import {AiOutlineEdit} from 'react-icons/ai'
+import { AiOutlineEdit } from 'react-icons/ai'
+import { IoIosCreate } from 'react-icons/io'
+import Events from '../events/Events'
+import { BiCalendarEvent } from 'react-icons/bi'
 
 
 type FeedProps = {
     token: string | null
+    eventChangeCounter: number
+    eventUpdateCounter: () => void
 }
 
 type FeedState = {
@@ -20,6 +25,7 @@ type FeedState = {
     updateModalShow: boolean
     selectedPost: string
     selectedPostId: number | undefined
+    showCanvas: boolean
 }
 
 export interface PostsType {
@@ -50,6 +56,7 @@ class Feed extends Component<FeedProps, FeedState> {
             updateModalShow: false,
             selectedPost: '',
             selectedPostId: undefined,
+            showCanvas: false
         }
         this.handleChangeCounter = this.handleChangeCounter.bind(this)
     }
@@ -75,6 +82,18 @@ class Feed extends Component<FeedProps, FeedState> {
     handleChangeCounter = (): void => {
         this.setState({
             changeCounter: this.state.changeCounter + 1
+        })
+    }
+
+    handleCanvasShow = (): void => {
+        this.setState({
+            showCanvas: true
+        })
+    }
+
+    handleCanvasClose = (): void => {
+        this.setState({
+            showCanvas: false
         })
     }
 
@@ -113,7 +132,6 @@ class Feed extends Component<FeedProps, FeedState> {
                     })
                 })
         }
-
     }
 
     handleUpdateFetch = (e: React.MouseEvent): any => {
@@ -186,13 +204,18 @@ class Feed extends Component<FeedProps, FeedState> {
                     <Col className='postBox rounded-pill' onClick={(e) => this.handleShow(e)}>
                         <p>Start a post</p>
                     </Col>
+                    <Row className='eventCanvasBtnRow'>
+                        <Col className='eventCanvasBtnCol'>
+                            <Button className='eventCanvasBtn' variant="outline-success" onClick={() => this.handleCanvasShow()}><BiCalendarEvent />Events</Button>
+                        </Col>
+                    </Row>
                 </Row>
 
                 <Modal show={this.state.modalShow} onHide={this.handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Create a post</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>
+                    <Modal.Body className='modalFeedBody'>
                         <Form noValidate validated={this.state.validated} onSubmit={(e) => this.handleCreate(e)}>
                             <Form.Group controlId='postfeedcontrol'>
                                 <Form.Control
@@ -207,7 +230,7 @@ class Feed extends Component<FeedProps, FeedState> {
                                 <Form.Control.Feedback type='invalid'>Post text required.</Form.Control.Feedback>
                             </Form.Group>
                             <Button variant="primary" className='mt-3' type='submit'>
-                                Post
+                                <IoIosCreate /> Post
                             </Button>
                         </Form>
                     </Modal.Body>
@@ -222,16 +245,16 @@ class Feed extends Component<FeedProps, FeedState> {
                                     <Row>
                                         <Col xs={10} className='postNameCol'>
                                             {post.AdminId ? <h4>Admin-{post.AdminId}</h4> : <h4>{post.User.FirstName}</h4>}
-                                            <i><Moment className='postTimeStamp' fromNow>{post.createdAt}</Moment></i>                      
+                                            <i><Moment className='postTimeStamp' fromNow>{post.createdAt}</Moment></i>
                                         </Col>
                                         {post.UserId && this.state.postData.userRole === 'Tenant'
                                             ? post.UserId === this.state.postData.userId
                                                 ?
                                                 <Col xs={2} className='postDropdownCol'>
                                                     <Dropdown>
-                                                        <Dropdown.Toggle variant='light' id="postDropdown"><BsThreeDots/></Dropdown.Toggle>
+                                                        <Dropdown.Toggle variant='light' id="postDropdown"><BsThreeDots /></Dropdown.Toggle>
                                                         <Dropdown.Menu>
-                                                            <Dropdown.Item onClick={(e) => { this.handleUpdateShow(e); this.setState({ selectedPostId: post.id, selectedPost: post.Post }) }}><AiOutlineEdit/>Edit</Dropdown.Item>
+                                                            <Dropdown.Item onClick={(e) => { this.handleUpdateShow(e); this.setState({ selectedPostId: post.id, selectedPost: post.Post }) }}><AiOutlineEdit />Edit</Dropdown.Item>
                                                             <Dropdown.Item><DeletePost token={this.props.token} post={post} handleChangeCounter={this.handleChangeCounter} /></Dropdown.Item>
                                                         </Dropdown.Menu>
                                                     </Dropdown>
@@ -243,9 +266,9 @@ class Feed extends Component<FeedProps, FeedState> {
                                             ?
                                             <Col xs={2} className='postDropdownCol'>
                                                 <Dropdown>
-                                                <Dropdown.Toggle variant='light' id="postDropdown"><BsThreeDots/></Dropdown.Toggle>
+                                                    <Dropdown.Toggle variant='light' id="postDropdown"><BsThreeDots /></Dropdown.Toggle>
                                                     <Dropdown.Menu>
-                                                        <Dropdown.Item onClick={(e) => { this.handleUpdateShow(e); this.setState({ selectedPostId: post.id, selectedPost: post.Post }) }}><AiOutlineEdit/>Edit</Dropdown.Item>
+                                                        <Dropdown.Item onClick={(e) => { this.handleUpdateShow(e); this.setState({ selectedPostId: post.id, selectedPost: post.Post }) }}><AiOutlineEdit />Edit</Dropdown.Item>
                                                         <Dropdown.Item><DeletePost token={this.props.token} post={post} handleChangeCounter={this.handleChangeCounter} /></Dropdown.Item>
                                                     </Dropdown.Menu>
                                                 </Dropdown>
@@ -269,7 +292,7 @@ class Feed extends Component<FeedProps, FeedState> {
                     <Modal.Header closeButton>
                         <Modal.Title>Edit Post</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>
+                    <Modal.Body className='feedModalBody'>
                         <Form.Control
                             className='modalFeedText'
                             as="textarea"
@@ -279,16 +302,23 @@ class Feed extends Component<FeedProps, FeedState> {
                         {this.state.selectedPost
                             ?
                             <Button className='mt-3' variant="primary" onClick={(e) => this.handleUpdateFetch(e)}>
-                                <AiOutlineEdit/>Edit
+                                <AiOutlineEdit />Edit
                             </Button>
                             :
                             <Button className='mt-3' variant="primary" disabled>
-                                <AiOutlineEdit/>Edit
+                                <AiOutlineEdit />Edit
                             </Button>
                         }
 
                     </Modal.Body>
                 </Modal>
+
+                <Offcanvas placement='end' show={this.state.showCanvas} onHide={() => this.handleCanvasClose()}>
+                    <Offcanvas.Header closeButton></Offcanvas.Header>
+                    <Offcanvas.Body>
+                        <Events eventUpdateCounter={this.props.eventUpdateCounter} eventChangeCounter={this.props.eventChangeCounter} token={this.props.token} />
+                    </Offcanvas.Body>
+                </Offcanvas>
 
             </Container>
         )

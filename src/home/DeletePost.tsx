@@ -34,7 +34,6 @@ class DeletePost extends Component<DeletePostProps, DeletePostState> {
             })
     }
 
-
     render() {
         return (
             <div>

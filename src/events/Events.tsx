@@ -150,7 +150,7 @@ class Events extends Component<EventsProps, EventsState> {
                             </Col>
                         </Row>
                     </Modal.Body>
-                    <Modal.Footer>
+                    <Modal.Footer className='eventModalFooter'>
                         <Button variant="primary" href={this.state.eventUrl} target='_blank' onClick={(e) => this.handleCloseEvent()}>
                             <ImTicket />Get Tickets
                         </Button>

@@ -122,7 +122,7 @@ class SavedEvents extends Component<SavedEventsProps, SavedEventsState> {
             <Container className='mainFeedWrapper'>
                 <Row className='feedWrapper'>
                     <Col>
-                        <h2>
+                        <h2 className='savedEventsTitle'>
                             Saved Events
                         </h2>
                     </Col>

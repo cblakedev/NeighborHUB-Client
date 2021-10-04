@@ -3,6 +3,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Auth from '../src/auth/Auth'
 import Home from '../src/home/Home'
+import WebFont from 'webfontloader'
 import { Spinner } from 'react-bootstrap'
 
 type AppProp = {
@@ -39,11 +40,17 @@ class App extends Component<AppProp, AppState> {
   }
 
   componentDidMount() {
+    WebFont.load({
+      google: {
+        families: ['Poppins', 'Lato']
+      }
+    });
+
     if (localStorage.getItem('token') && localStorage.getItem('role')) {
       this.setState({
         sessionToken: localStorage.getItem('token'),
         userRole: localStorage.getItem('role')
-      })
+      })      
     }
   }
 
