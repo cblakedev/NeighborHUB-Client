@@ -91,13 +91,7 @@ class Events extends Component<EventsProps, EventsState> {
 
 
     componentDidMount() {
-        fetch(`https://app.ticketmaster.com/discovery/v2/events.json?dmaId=303&sort=date,asc&size=50&apikey=${env.API_KEY}`, {
-            mode: 'cors',
-            method: 'GET',
-            headers: {
-                'Content-type': 'application/json'
-            }
-        })
+        fetch(`https://boiling-thicket-77087.herokuapp.com/https://app.ticketmaster.com/discovery/v2/events.json?dmaId=303&sort=date,asc&size=50&apikey=${env.API_KEY}`)
             .then((res) => res.json())
             .then((data) => {
                 this.setState({
