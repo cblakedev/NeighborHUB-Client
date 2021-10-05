@@ -262,7 +262,6 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                         this.setState({
                             ticketData: data.myTickets
                         })
-                        console.log(data.myTickets)
                     })
 
             } else if (this.props.role === 'Admin') {
@@ -281,7 +280,6 @@ class Tickets extends Component<TicketsProps, TicketsState> {
                         this.setState({
                             ticketData: data.allTickets
                         })
-                        console.log(data)
                     })
             }
         }
