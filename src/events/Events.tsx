@@ -92,7 +92,11 @@ class Events extends Component<EventsProps, EventsState> {
 
     componentDidMount() {
         fetch(`https://app.ticketmaster.com/discovery/v2/events.json?dmaId=303&sort=date,asc&size=50&apikey=${env.API_KEY}`, {
-            mode: 'no-cors'
+            mode: 'cors',
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json'
+            }
         })
             .then((res) => res.json())
             .then((data) => {
