@@ -1,7 +1,7 @@
 # NeighborHUB App
 
 ## Description
-The NeighborHUB app's goal is to bring residential communities close by providing a social hub stricty for its residents. It also
+The NeighborHUB app's goal is to bring residential communities closer by providing a social hub strictly for its residents. It also
 provides an intuitive ticketing system for residents that allows them to send tickets to the front office regarding issues. The Ticketmaster
 API is also utilized to show upcoming events close to the community that residents can bookmark.
 
