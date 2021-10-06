@@ -10,9 +10,12 @@ type UserRegisterState = {
     validated: boolean
     email: string,
     password: string,
+    confirmPassword: string,
+    passwordError: string,
     firstName: string,
     lastName: string,
-    unitNumber: string
+    unitNumber: string,
+    duplicateEmailError: string
 }
 
 class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
@@ -22,9 +25,12 @@ class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
             validated: false,
             email: '',
             password: '',
+            confirmPassword: '',
+            passwordError: '',
             firstName: '',
             lastName: '',
-            unitNumber: ''
+            unitNumber: '',
+            duplicateEmailError: ''
         }
     }
 
@@ -53,9 +59,17 @@ class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
                     this.setState({
                         email: '',
                         password: '',
+                        confirmPassword: '',
+                        passwordError: '',
                         firstName: '',
                         lastName: '',
-                        unitNumber: ''
+                        unitNumber: '',
+                        duplicateEmailError: ''
+                    })
+                })
+                .catch((err) => {
+                    this.setState({
+                        duplicateEmailError: 'Email already in use.'
                     })
                 })
         }
@@ -70,7 +84,15 @@ class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
         }
 
         this.setState({ validated: true });
-        this.handleFetch();
+
+        if (this.state.password === this.state.confirmPassword) {
+            this.handleFetch();
+        } else {
+            this.setState({
+                passwordError: 'Password must match.'
+            })
+        }
+
     };
 
     render() {
@@ -95,7 +117,7 @@ class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
                                     value={this.state.email}
                                     onChange={(e) => this.setState({ email: e.target.value })}
                                 />
-                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                {this.state.duplicateEmailError ? <p className='loginValidator'>{this.state.duplicateEmailError}</p> : undefined}
                                 <Form.Control.Feedback type='invalid'>Please enter a valid email</Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group className='mt-3' as={Col} xs='12' controlId='validationCustom04'>
@@ -107,8 +129,22 @@ class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
                                     value={this.state.password}
                                     onChange={(e) => this.setState({ password: e.target.value })}
                                 />
-                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 <Form.Control.Feedback type='invalid'>Requires at least 6 characters, one uppercase, one lowercase, one number, and one special character.</Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group className='mt-3' as={Col} xs='12' controlId='validationCustom15'>
+                                <Form.Control
+                                    required
+                                    type="password"
+                                    placeholder="Confirm Password"
+                                    pattern='((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$'
+                                    value={this.state.confirmPassword}
+                                    onChange={(e) => this.setState({ confirmPassword: e.target.value })}
+                                />
+                                {this.state.password !== this.state.confirmPassword
+                                    ?
+                                    <p className='loginValidator'>{this.state.passwordError}</p>
+                                    :
+                                    <Form.Control.Feedback type='invalid'>Requires at least 6 characters, one uppercase, one lowercase, one number, and one special character.</Form.Control.Feedback>}
                             </Form.Group>
                         </Row>
                         <Row>
@@ -120,7 +156,6 @@ class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
                                     value={this.state.firstName}
                                     onChange={(e) => this.setState({ firstName: e.target.value })}
                                 />
-                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 <Form.Control.Feedback type='invalid'>Please enter your first name.</Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group className='mt-3' as={Col} xs='6' controlId='validationCustom06'>
@@ -131,7 +166,6 @@ class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
                                     value={this.state.lastName}
                                     onChange={(e) => this.setState({ lastName: e.target.value })}
                                 />
-                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 <Form.Control.Feedback type='invalid'>Please enter your last name.</Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group className='mt-3' as={Col} xs='6' controlId='validationCustom07'>
@@ -142,7 +176,6 @@ class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
                                     value={this.state.unitNumber}
                                     onChange={(e) => this.setState({ unitNumber: e.target.value })}
                                 />
-                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 <Form.Control.Feedback type='invalid'>Please enter your room number.</Form.Control.Feedback>
                             </Form.Group>
                         </Row>

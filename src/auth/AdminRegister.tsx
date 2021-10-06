@@ -10,8 +10,12 @@ type AdminRegisterState = {
     validated: boolean
     email: string,
     password: string,
+    confirmPassword: string,
+    passwordError: string,
     firstName: string,
     lastName: string,
+    duplicateEmailError: string
+
 }
 
 class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
@@ -23,12 +27,15 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
             password: '',
             firstName: '',
             lastName: '',
+            confirmPassword: '',
+            passwordError: '',
+            duplicateEmailError: ''
         }
     }
 
     handleFetch = (): void => {
         const { email, password, firstName, lastName } = this.state
-        
+
         if (email && password && firstName && lastName) {
             fetch(`${APIURL}admin/register`, {
                 method: 'POST',
@@ -50,8 +57,16 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
                     this.setState({
                         email: '',
                         password: '',
+                        confirmPassword: '',
+                        passwordError: '',
                         firstName: '',
                         lastName: '',
+                        duplicateEmailError: ''
+                    })
+                })
+                .catch((err) => {
+                    this.setState({
+                        duplicateEmailError: 'Email already in use.'
                     })
                 })
         }
@@ -66,7 +81,14 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
         }
 
         this.setState({ validated: true });
-        this.handleFetch();
+
+        if (this.state.password === this.state.confirmPassword) {
+            this.handleFetch();
+        } else {
+            this.setState({
+                passwordError: 'Password must match.'
+            })
+        }
     };
 
     render() {
@@ -91,7 +113,7 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
                                     value={this.state.email}
                                     onChange={(e) => this.setState({ email: e.target.value })}
                                 />
-                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                {this.state.duplicateEmailError ? <p className='loginValidator'>{this.state.duplicateEmailError}</p> : undefined}
                                 <Form.Control.Feedback type='invalid'>Please enter a valid email</Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group className='mt-3' as={Col} xs='12' controlId='validationCustom11'>
@@ -103,12 +125,26 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
                                     value={this.state.password}
                                     onChange={(e) => this.setState({ password: e.target.value })}
                                 />
-                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 <Form.Control.Feedback type='invalid'>Requires at least 6 characters, one uppercase, one lowercase, one number, and one special character.</Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group className='mt-3' as={Col} xs='12' controlId='validationCustom14'>
+                                <Form.Control
+                                    required
+                                    type="password"
+                                    placeholder="Confirm Password"
+                                    pattern='((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$'
+                                    value={this.state.confirmPassword}
+                                    onChange={(e) => this.setState({ confirmPassword: e.target.value })}
+                                />
+                                {this.state.password !== this.state.confirmPassword
+                                    ?
+                                    <p className='loginValidator'>{this.state.passwordError}</p>
+                                    :
+                                    <Form.Control.Feedback type='invalid'>Requires at least 6 characters, one uppercase, one lowercase, one number, and one special character.</Form.Control.Feedback>}
                             </Form.Group>
                         </Row>
                         <Row>
-                            <Form.Group className='mt-3' as={Col} xs='6' controlId='validationCustom12'>      
+                            <Form.Group className='mt-3' as={Col} xs='6' controlId='validationCustom12'>
                                 <Form.Control
                                     required
                                     type="text"
@@ -116,10 +152,9 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
                                     value={this.state.firstName}
                                     onChange={(e) => this.setState({ firstName: e.target.value })}
                                 />
-                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 <Form.Control.Feedback type='invalid'>Please enter your first name.</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group className='mt-3' as={Col} xs='6' controlId='validationCustom13'>      
+                            <Form.Group className='mt-3' as={Col} xs='6' controlId='validationCustom13'>
                                 <Form.Control
                                     required
                                     type="text"
@@ -127,7 +162,6 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
                                     value={this.state.lastName}
                                     onChange={(e) => this.setState({ lastName: e.target.value })}
                                 />
-                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 <Form.Control.Feedback type='invalid'>Please enter your last name.</Form.Control.Feedback>
                             </Form.Group>
                         </Row>
