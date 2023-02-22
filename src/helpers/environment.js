@@ -10,7 +10,6 @@ switch (window.location.hostname) {
 
     default :
         APIURL = 'https://neighborhub-server.herokuapp.com/'
-      
 }
 
 export default APIURL;
