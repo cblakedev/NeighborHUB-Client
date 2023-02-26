@@ -83,7 +83,10 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
         this.setState({ validated: true });
 
         if (this.state.password === this.state.confirmPassword) {
-            this.handleFetch();
+            let pattern = /((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$/
+            if (pattern.test(this.state.password)) {
+                this.handleFetch();
+            }
         } else {
             this.setState({
                 passwordError: 'Password must match.'
@@ -125,7 +128,11 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
                                     value={this.state.password}
                                     onChange={(e) => this.setState({ password: e.target.value })}
                                 />
-                                <Form.Control.Feedback type='invalid'>Requires at least 6 characters, one uppercase, one lowercase, one number, and one special character.</Form.Control.Feedback>
+                                {this.state.password !== this.state.confirmPassword
+                                    ?
+                                    <p className='loginValidator'>{this.state.passwordError}</p>
+                                    :
+                                    <Form.Control.Feedback type='invalid'>Requires at least 6 characters, one uppercase, one lowercase, one number, and one special character.</Form.Control.Feedback>}
                             </Form.Group>
                             <Form.Group className='mt-3' as={Col} xs='12' controlId='validationCustom14'>
                                 <Form.Control

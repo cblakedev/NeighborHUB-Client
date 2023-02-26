@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { Container, Row, Tabs, Tab } from 'react-bootstrap';
 import AdminLogin from './AdminLogin';
 import AdminRegister from './AdminRegister';
@@ -15,7 +15,7 @@ class AdminAuth extends Component<AdminAuthProps, AdminAuthState> {
     constructor(props: AdminAuthProps) {
         super(props)
         this.state = {
-       
+
         }
     }
     
