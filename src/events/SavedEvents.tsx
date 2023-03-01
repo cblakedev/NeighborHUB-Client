@@ -132,7 +132,7 @@ class SavedEvents extends Component<SavedEventsProps, SavedEventsState> {
                         ?
                         this.state.userEvents.map((event) => {
                             return (
-                                <Col className='savedEventItem' sm={6}>
+                                <Col className='savedEventItem' key={event.id} sm={6}>
                                     <img src={event.EventPoster} alt='Event Poster' />
                                     <h4>{this.truncateString(event.EventName, 20)}</h4>
                                     <Button onClick={(e) => {

@@ -1,9 +1,12 @@
 html {
-    background-color: #E5E5E5
+    background-image: linear-gradient(to right, #537fe782, #609ea282), url(https://images6.alphacoders.com/649/649957.jpg);
+    background-position: center;
+    background-size: cover;
+    height: 100%;
 }
 
 .App {
-    background-color: #E5E5E5
+    background-color: #ffffff
     
 }
 

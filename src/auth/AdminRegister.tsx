@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Spinner } from 'react-bootstrap';
 import APIURL from '../helpers/environment';
 
 type AdminRegisterProps = {
@@ -14,8 +14,8 @@ type AdminRegisterState = {
     passwordError: string,
     firstName: string,
     lastName: string,
-    duplicateEmailError: string
-
+    duplicateEmailError: string,
+    submitClicked: boolean
 }
 
 class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
@@ -29,7 +29,8 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
             lastName: '',
             confirmPassword: '',
             passwordError: '',
-            duplicateEmailError: ''
+            duplicateEmailError: '',
+            submitClicked: false
         }
     }
 
@@ -37,6 +38,10 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
         const { email, password, firstName, lastName } = this.state
 
         if (email && password && firstName && lastName) {
+            this.setState({
+                submitClicked: true
+            })
+
             fetch(`${APIURL}admin/register`, {
                 method: 'POST',
                 body: JSON.stringify({
@@ -66,7 +71,8 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
                 })
                 .catch((err) => {
                     this.setState({
-                        duplicateEmailError: 'Email already in use.'
+                        duplicateEmailError: 'Email already in use.',
+                        submitClicked: false
                     })
                 })
         }
@@ -172,7 +178,13 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
                                 <Form.Control.Feedback type='invalid'>Please enter your last name.</Form.Control.Feedback>
                             </Form.Group>
                         </Row>
-                        <Button type="submit" className='mt-3'>Register</Button>
+                        <Button type="submit" className={`${this.state.submitClicked ? "d-none" : ""} mt-3 registerSubmitBtn`}>
+							Login
+						</Button>
+						<Button className={`${this.state.submitClicked ? "" : "d-none"} mt-3 registerSpinner disabled`}>
+							<Spinner className="me-1" as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+							Loading...
+						</Button>
                     </Form>
                 </Row>
             </Container>

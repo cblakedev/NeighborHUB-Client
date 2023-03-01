@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Spinner } from 'react-bootstrap';
 import APIURL from '../helpers/environment';
 
 type AdminLoginProps = {
@@ -10,7 +10,8 @@ type AdminLoginState = {
     validated: boolean,
     email: string,
     password: string,
-    loginError: string
+    loginError: string,
+    submitClicked: boolean
 }
 
 class AdminLogin extends Component<AdminLoginProps, AdminLoginState> {
@@ -20,7 +21,8 @@ class AdminLogin extends Component<AdminLoginProps, AdminLoginState> {
             validated: false,
             email: '',
             password: '',
-            loginError: ''
+            loginError: '',
+            submitClicked: false
         }
     }
 
@@ -30,6 +32,10 @@ class AdminLogin extends Component<AdminLoginProps, AdminLoginState> {
         });
         
         if (this.state.email && this.state.password) {
+            this.setState({
+                submitClicked: true
+            })
+
             fetch(`${APIURL}admin/login`, {
                 method: 'POST',
                 body: JSON.stringify({
@@ -52,7 +58,8 @@ class AdminLogin extends Component<AdminLoginProps, AdminLoginState> {
                 })
                 .catch(err => {
                     this.setState({
-                        loginError: 'Invalid email or password.'
+                        loginError: 'Invalid email or password.',
+                        submitClicked: false
                     })
                     console.log(err)
                 })
@@ -105,7 +112,13 @@ class AdminLogin extends Component<AdminLoginProps, AdminLoginState> {
                             />
                             {this.state.loginError ? <p className='loginValidator'>{this.state.loginError}</p> : undefined}
                         </Form.Group>
-                        <Button type="submit" className='mt-3'>Login</Button>
+                        <Button type="submit" className={`${this.state.submitClicked ? "d-none" : ""} mt-3 loginSubmitBtn`}>
+							Login
+						</Button>
+						<Button className={`${this.state.submitClicked ? "" : "d-none"} mt-3 loginSpinner disabled`}>
+							<Spinner className="me-1" as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+							Loading...
+						</Button>
                     </Form>
                 </Row>
             </Container>
