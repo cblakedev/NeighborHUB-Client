@@ -57,7 +57,7 @@ class Home extends Component<HomeProps, HomeState> {
 
     render() {
         return (
-            <div>
+            <div className="homeWrapper">
                 <Router>
                     <Row className='headerBar g-0'>
                         <Col className='homeBtn'>

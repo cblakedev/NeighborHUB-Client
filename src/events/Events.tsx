@@ -111,23 +111,20 @@ class Events extends Component<EventsProps, EventsState> {
                         ?
                         this.state.eventData._embedded.events.map((event: any) => {
                             return (
-                                <Row key={event.id} className='eventWrapper'>
+                                <Row key={event.id} className='eventWrapper' onClick={(e) => {
+                                    this.setState({
+                                        eventName: event.name,
+                                        eventPoster: event.images[0].url,
+                                        eventDate: this.dateConvert(event.dates.start.dateTime),
+                                        eventTime: this.timeConvert(event.dates.start.dateTime),
+                                        eventUrl: event.url
+                                    }); this.handleShowEvent(e)
+                                }}>
                                     <Col className='eventItemCol'>
                                         <img src={event.images[0].url} alt='Event Poster' />
                                         <h4>{this.truncateString(event.name, 20)}</h4>
-
-                                        <Button variant="outline-primary" onClick={(e) => {
-                                            this.setState({
-                                                eventName: event.name,
-                                                eventPoster: event.images[0].url,
-                                                eventDate: this.dateConvert(event.dates.start.dateTime),
-                                                eventTime: this.timeConvert(event.dates.start.dateTime),
-                                                eventUrl: event.url
-                                            }); this.handleShowEvent(e)
-                                        }}><BsPlusCircle /></Button>
-
-
                                     </Col>
+                                    {/* <Col className="eventOverlay"></Col> */}
                                 </Row>
                             )
                         })

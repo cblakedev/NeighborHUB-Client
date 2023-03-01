@@ -1,587 +1,585 @@
 html {
-    background-image: linear-gradient(to right, #537fe782, #609ea282), url(https://images6.alphacoders.com/649/649957.jpg);
-    background-position: center;
-    background-size: cover;
-    height: 100%;
+	background-image: linear-gradient(to right, #537fe782, #609ea282), url(https://images6.alphacoders.com/649/649957.jpg);
+	background-position: center;
+	background-size: cover;
+	height: 100%;
 }
 
 .App {
-    background-color: #ffffff
-    
+	background-color: #23374d;
+}
+
+.homeWrapper {
+	background-color: #f3f3f3;
 }
 
 .btn-primary {
-    background-color: #1089FF !important;
-    border-color: #1089FF !important;
+	background-color: #1089ff !important;
+	border-color: #1089ff !important;
 }
 
 .btn-primary:hover {
-    background-color: #23374D !important;
-    border-color: #23374D !important;
+	background-color: #23374d !important;
+	border-color: #23374d !important;
 }
 
-h1, h2, h3{
-    color: #23374D;
-    font-family: 'Poppins', 'sans-serif';
-    font-weight: 700 !important;
+h1,
+h2,
+h3 {
+	color: #23374d;
+	font-family: "Poppins", "sans-serif";
+	font-weight: 700 !important;
 }
 
 h4 {
-    color: #23374D;
-    font-family: 'Lato', 'sans-serif';
-    font-weight: 600 !important;
-    font-size: 1.2rem !important;
+	color: #23374d;
+	font-family: "Lato", "sans-serif";
+	font-weight: 600 !important;
+	font-size: 1.2rem !important;
 }
 
 h5 {
-    color: #23374D;
-    font-family: 'Lato', 'sans-serif';
-    font-weight: 600 !important;
+	color: #23374d;
+	font-family: "Lato", "sans-serif";
+	font-weight: 600 !important;
 }
-
-
-
 
 /* Auth Styles */
 .appTitle {
-    text-align: center;
-    color: #23374D;
+	text-align: center;
+	color: #23374d;
 }
 
 .appUser {
-    text-align: center;
-    color: #23374D;
+	text-align: center;
+	color: #23374d;
 }
 
 .appUserAdmin {
-    text-align: center;
-    color: #EB8242;
+	text-align: center;
+	color: #eb8242;
 }
 
 .nav-link {
-    color: #a5a5a5 !important;
+	color: #a5a5a5 !important;
 }
 
 .nav-link.active {
-    border-bottom-color: #1089FF !important;
-    color: #1089FF !important;
+	border-bottom-color: #1089ff !important;
+	color: #1089ff !important;
 }
 
 .authBtnCol {
-    display: flex;
-    justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 .userBtn a {
-    color: white;
-    text-decoration: none;
+	color: white;
+	text-decoration: none;
 }
 
 .userBtn {
-    margin: 10px;
+	margin: 10px;
 }
 
 .loginValidator {
-    color: red;
-    font-size: .85rem;
+	color: red;
+	font-size: 0.85rem;
 }
 
 .adminBtn {
-    background-color: #EB8242 !important;
-    border-color: #EB8242 !important;
-    margin: 10px;
+	background-color: #eb8242 !important;
+	border-color: #eb8242 !important;
+	margin: 10px;
 }
 
 .adminBtn a {
-    text-decoration: none;
-    color: white;
+	text-decoration: none;
+	color: white;
 }
 
 .mainAuthWrapper {
-    max-width: 400px !important;
-    background-color: white;
-    position: absolute;
-    top: 10%;
-    margin-left: -200px !important;
-    left: 50%;
-    border-radius: .25rem;
-    box-shadow: 0 0 10px 1px rgb(196, 196, 196);
+	max-width: 400px !important;
+	background-color: white;
+	position: absolute;
+	top: 17%;
+	margin-left: -200px !important;
+	left: 50%;
+	border-radius: 0.25rem;
+	box-shadow: 0 0 10px 1px rgb(196, 196, 196);
 }
 
 .tab-content {
-    padding: 20px 0 !important;
+	padding: 20px 0 !important;
 }
 
-
-
 @media only screen and (max-width: 400px) {
-    .mainAuthWrapper {
-        width: 100% !important;
-        height: 100vh !important;
-        position: inherit;
-        margin: 0 !important;
-    }
+	.mainAuthWrapper {
+		width: 100% !important;
+		height: 100vh !important;
+		position: inherit;
+		margin: 0 !important;
+	}
 
-    .authBtnRow {
-       
-    }
-
-    .authBtnCol {
-        position: absolute;
-        bottom: 0;     
-    }
+	.authBtnCol {
+		position: absolute;
+		bottom: 0;
+	}
 }
 
 /* Home Nav Styles */
 .headerBar {
-    position: relative;
-    background-color: white;
-    box-shadow: 0 0 10px 1px rgb(196, 196, 196);
-    padding: 7px 0;
+	position: relative;
+	background-color: white;
+	box-shadow: 0 0 10px 1px rgb(196, 196, 196);
+	padding: 7px 0;
 }
 
 .headerBar svg {
-    position: absolute;
-    left: 10px;
-    font-size: 1.8rem;
-    display: none;
+	position: absolute;
+	right: 10px;
+	font-size: 1.8rem;
+	display: none;
 }
 
 .headerBar svg:hover {
-    color: #1089FF;
-    cursor: pointer;
+	color: #1089ff;
+	cursor: pointer;
 }
 
 .headerTitle {
-    float: right;
-    margin: auto;
-    padding-right: 10px;
+	margin: auto;
+	padding-left: 10px;
 }
 
 .headerTitle a {
-    text-decoration: none !important;
-    color: #23374D;
+	text-decoration: none !important;
+	color: #23374d;
 }
 
 .headerTitle a:hover {
-    color: #1089FF;
-    cursor: pointer;
+	color: #1089ff;
+	cursor: pointer;
 }
 
 .homeLinks {
-    height: 350px;
-    max-width: 200px !important;
-    background-color: white;
-    margin: 30px 10px !important;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    padding-top: 20px;
-    box-shadow: 0 0 10px 1px rgb(196, 196, 196);
-    border: 1px solid #adb5bd;
+	height: 350px;
+	max-width: 200px !important;
+	background-color: white;
+	margin: 30px 10px !important;
+	border-radius: 8px;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	padding-top: 20px;
+	box-shadow: 0 0 10px 1px rgb(196, 196, 196);
+	border: 1px solid #adb5bd;
 }
 
 .navLinksCanvas {
-    max-width: 200px !important;
+	max-width: 200px !important;
 }
 
 .navLinksCanvasBody {
-    margin: auto;
+	margin: auto;
 }
 
 .navItems {
-    padding: 0;
-    margin: 0 auto;
+	padding: 0;
+	margin: 0 auto;
 }
 
 .navItems li {
-    list-style: none;
-    font-size: 1.2rem;
-    padding: 4px;
+	list-style: none;
+	font-size: 1.2rem;
+	padding: 4px;
 }
 
 .navItems a {
-    text-decoration: none;
-    color: #23374D;
+	text-decoration: none;
+	color: #23374d;
 }
 
 .navItems a:hover {
-    color: #1089FF
+	color: #1089ff;
 }
 
 .navItems svg {
-    padding-bottom: 4px;
-    font-size: 1.5rem
+	padding-bottom: 4px;
+	font-size: 1.5rem;
 }
 
 .logoutBtnWrapper Button {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    margin-left: -47px !important;
+	position: absolute;
+	bottom: 10px;
+	left: 50%;
+	margin-left: -47px !important;
 }
 
 .logoutBtnWrapper svg {
-    margin: 0 3px 4px 0;
+	margin: 0 3px 4px 0;
 }
 
 .routerViews {
-    height: 90vh;
-    overflow-y: scroll;
-    background-color:rgba(255, 255, 255, 0);
-    margin: 0 10px !important;
-    border-radius: 8px;
-    margin-top: 30px !important;
+	height: 90vh;
+	overflow-y: scroll;
+	background-color: rgba(255, 255, 255, 0);
+	margin: 0 10px !important;
+	border-radius: 8px;
+	margin-top: 30px !important;
 }
 
 .eventViews {
-    height: 90vh;
-    background-color: white;
-    margin: 30px 10px !important;
-    border-radius: 8px;
-    box-shadow: 0 0 10px 1px rgb(196, 196, 196);
-    border: 1px solid #adb5bd;
+	height: 90vh;
+	background-color: white;
+	margin: 30px 10px !important;
+	border-radius: 8px;
+	box-shadow: 0 0 10px 1px rgb(196, 196, 196);
+	border: 1px solid #adb5bd;
 }
 
 /* Feed Styles */
 .feedWrapper {
-    border-bottom: 1px solid #bbbbbb;
-    padding-bottom: 10px !important;
+	border-bottom: 1px solid #bbbbbb;
+	padding-bottom: 10px !important;
 }
 
 .dropdown-toggle::after {
-    content: none !important;
+	content: none !important;
 }
 
-
 .postBox {
-    border: 1px solid rgb(168, 168, 168);
-    background-color: white;
-    margin-bottom: 10px !important;
-    box-shadow: 0 0 10px 1px rgb(196, 196, 196);
+	border: 1px solid rgb(168, 168, 168);
+	background-color: white;
+	margin-bottom: 10px !important;
+	box-shadow: 0 0 10px 1px rgb(196, 196, 196);
 }
 
 .postBox:hover {
-    cursor: pointer;
-    background-color: #E8F0F2 !important;
+	cursor: pointer;
+	background-color: #e8f0f2 !important;
 }
 
 .postBox p {
-    margin: 0 !important;
-    padding: 10px
+	margin: 0 !important;
+	padding: 10px;
 }
 
 .eventCanvasBtnRow {
-    margin: auto !important;
+	margin: auto !important;
 }
 
 .eventCanvasBtnCol {
-    text-align: center;
-    display: none;
+	text-align: center;
+	display: none;
 }
 
 .eventCanvasBtn {
-    border: none !important;
-    padding: 0 !important;
-    font-size: 1.1rem !important;
-    font-weight: 600 !important;
+	border: none !important;
+	padding: 0 !important;
+	font-size: 1.1rem !important;
+	font-weight: 600 !important;
 }
 
 .eventCanvasBtn svg {
-    margin: 0 3px 4px 0;
+	margin: 0 3px 4px 0;
 }
 
 .modal-footer {
-    border-top: none !important;
+	border-top: none !important;
 }
 
-.modalFeedBody svg{
-    margin: 0 0 4px 0;
+.modalFeedBody svg {
+	margin: 0 0 4px 0;
 }
 
 .modalFeedText {
-    height: 100px;
+	height: 100px;
 }
 
-.feedModalBody svg{
-    margin: 0 3px 4px 0;
+.feedModalBody svg {
+	margin: 0 3px 4px 0;
 }
 
 .feedposts {
-    background-color: white;
-    border: 1px solid #adb5bd;
-    border-radius: .75rem;
-    margin: 20px 0 !important;
-    box-shadow: 0 0 10px 1px rgb(196, 196, 196);
+	background-color: white;
+	border: 1px solid #adb5bd;
+	border-radius: 0.75rem;
+	margin: 20px 0 !important;
+	box-shadow: 0 0 10px 1px rgb(196, 196, 196);
 }
 
 .postNameCol h4 {
-    margin: 0 !important;
-    padding: 5px 0 !important;
-    color: #23374D;
+	margin: 0 !important;
+	padding: 5px 0 !important;
+	color: #23374d;
 }
 
 .postMenuCtrl {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
 }
 
 .postBody p {
-    margin: 0 !important;
-    border-top: 1px solid #adb5bd;
-    padding: 10px 0;
+	margin: 0 !important;
+	border-top: 1px solid #adb5bd;
+	padding: 10px 0;
 }
 
 .postMenu {
-    position: absolute;
-    left: 100%;
-    margin-left: -100px;
-    width: 100px !important;
-    padding: 10px;
-    background-color: rgb(199, 198, 198);
-    border-radius: .50rem;
-    
+	position: absolute;
+	left: 100%;
+	margin-left: -100px;
+	width: 100px !important;
+	padding: 10px;
+	background-color: rgb(199, 198, 198);
+	border-radius: 0.5rem;
 }
 
 .postMenuOptions {
-    position: relative;
-    display: flex;
-    flex-direction: column !important;
+	position: relative;
+	display: flex;
+	flex-direction: column !important;
 }
 
-.postMenuOptions svg{
-    position: absolute;
-    position: absolute;
-    left: 100%;
-    margin-left: -36px;
-    width: 50px;
-    font-size: 1.3rem;
-    top: -8px;
+.postMenuOptions svg {
+	position: absolute;
+	position: absolute;
+	left: 100%;
+	margin-left: -36px;
+	width: 50px;
+	font-size: 1.3rem;
+	top: -8px;
 }
 
 #postDropdown {
-    float: right;
-    font-size: .75rem;
-    padding: 0; 
-    font-size: 1.5rem;
+	float: right;
+	font-size: 0.75rem;
+	padding: 0;
+	font-size: 1.5rem;
 }
 
 .postDropdownCol svg {
-    margin: 0 3px 4px 0;
+	margin: 0 3px 4px 0;
 }
 
-
 .btn-light {
-    background-color: white !important;
-    border-color: white !important;
+	background-color: white !important;
+	border-color: white !important;
 }
 
 /* Ticket Styles */
 .ticketFeedTitleWrapper {
-    padding-top: 10px;
+	padding-top: 10px;
 }
 
-.ticketFeedTitleWrapper h2{
-    margin: 0;
+.ticketFeedTitleWrapper h2 {
+	margin: 0;
 }
 
 .createTicketBtn {
-    float: right;
-    margin: 5px 0;
+	float: right;
+	margin: 5px 0;
 }
 
-.createTicketBtn svg{
-    margin: 0 0 4px 0;
+.createTicketBtn svg {
+	margin: 0 0 4px 0;
 }
 
 .ticketWrapper {
-    background-color: white;
-    border: 1px solid #adb5bd;
-    border-radius: .75rem;
-    margin: 20px 0 !important;
+	background-color: white;
+	border: 1px solid #adb5bd;
+	border-radius: 0.75rem;
+	margin: 20px 0 !important;
 }
 
 .ticketTitleCol h4 {
-    margin: 0 !important;
-    padding: 5px 0 !important;
+	margin: 0 !important;
+	padding: 5px 0 !important;
 }
 
 .ticketTitleCol p {
-    margin: 0;
+	margin: 0;
 }
 
-.ticketPostWrapper p{
-    margin: 0 !important;
-    border-top: 1px solid #adb5bd;
-    padding: 10px 0;
+.ticketPostWrapper p {
+	margin: 0 !important;
+	border-top: 1px solid #adb5bd;
+	padding: 10px 0;
 }
 
 .resolvingIcon {
-    width: 1rem !important;
-    height: 1rem !important;
+	width: 1rem !important;
+	height: 1rem !important;
 }
 
-.isResolvedIcon svg{
-    font-size: 1.2rem;
-    margin-bottom: 5px;
-    color: green;
+.isResolvedIcon svg {
+	font-size: 1.2rem;
+	margin-bottom: 5px;
+	color: green;
 }
 
 .createTicketModalBody svg {
-    margin: 0 0 4px 0;
+	margin: 0 0 4px 0;
 }
 
 .ticketModalButton {
-    margin-right: 10px;
+	margin-right: 10px;
 }
 
 .ticketModalButton svg {
-    margin: 0 3px 4px 0;
+	margin: 0 3px 4px 0;
 }
 
 .ticketDropdownCol svg {
-    margin: 0 3px 4px 0;
+	margin: 0 3px 4px 0;
 }
 
 /* Events Feed Styles */
 .upcomingEventsTitle {
-    border-bottom: 1px solid #bbbbbb;
-    padding: 8px 0;
+	border-bottom: 1px solid #bbbbbb;
+	padding: 8px 0;
 }
 
 .eventViews {
-    overflow-y: scroll;
+	overflow-y: scroll;
 }
 
 .eventItemCol {
-    margin: 15px 0;
+	margin: 15px 0;
 }
 
 .eventItemCol h4 {
-    margin-top: 5px;
+	margin-top: 5px;
+}
+
+.eventWrapper:hover {
+    cursor: pointer;
+    opacity: .5;
 }
 
 .eventItemCol h5 {
-    display: inline-block;
+	display: inline-block;
 }
 
 .eventWrapper img {
-    width: 100%;
-    height: auto;
-    border-radius: .50rem;
+	width: 100%;
+	height: auto;
+	border-radius: 0.5rem;
 }
 
 .eventWrapper svg {
-    float: right;
-    font-size: 2.3rem;
+	float: right;
+	font-size: 2.3rem;
 }
 
 .eventWrapper svg:hover {
-    color: grey;
-    cursor: pointer;
+	color: grey;
+	cursor: pointer;
 }
 
 .eventBtns {
-    margin-top: 7px;
+	margin-top: 7px;
 }
 
 .btn-outline-primary {
-    color: #1089FF !important;
-    border-color: #0d6dfd00 !important;
-    padding: 0 !important;
-    border-radius: 20px !important;
+	color: #1089ff !important;
+	border-color: #0d6dfd00 !important;
+	padding: 0 !important;
+	border-radius: 20px !important;
 }
 
 .btn-outline-primary:hover {
-    background-color: white !important;
+	background-color: white !important;
 }
 
-.btn-outline-primary:hover svg{
-    color: #23374D;
+.btn-outline-primary:hover svg {
+	color: #23374d;
 }
 
 #eventsDropdown::after {
-    display: none
+	display: none;
 }
 
 .eventModalImg {
-    width: 100%;
-    border-radius: .50rem;
+	width: 100%;
+	border-radius: 0.5rem;
 }
 
-.eventModal .modal-content{
-   max-width: 400px;
-   margin: auto;
+.eventModal .modal-content {
+	max-width: 400px;
+	margin: auto;
 }
 
 .eventModal svg {
-    margin: 0 3px 4px 0;
+	margin: 0 3px 4px 0;
 }
 
 .eventModalDate {
-    text-align: center;
-    padding-top: 5px;
+	text-align: center;
+	padding-top: 5px;
 }
 
 .eventModalTime {
-    text-align: center;
-    padding-top: 5px;
+	text-align: center;
+	padding-top: 5px;
 }
 
 /* Saved Events Styles */
 .savedEventsTitle {
-    margin-bottom: 0;
+	margin-bottom: 0;
+	padding-top: 10px;
 }
 
 .eventItemRow img {
-    width: 100%;
+	width: 100%;
 }
 
 .savedEventItem {
-    margin: 20px 0 !important;
+	margin: 20px 0 !important;
 }
 
-.savedEventItem img{
-    border-radius: .50rem;
-    height: 175px;
+.savedEventItem img {
+	border-radius: 0.5rem;
+	height: 175px;
 }
 
 /* Responsiveness Styles */
 
 @media only screen and (max-width: 1200px) {
-    .homeLinks {
-        display: none;
-    }
+	.homeLinks {
+		display: none;
+	}
 
-    .headerBar svg {
-        display: block;
-    }
-  }
+	.headerBar svg {
+		display: block;
+	}
+}
 
 @media only screen and (max-width: 992px) {
-    .savedEventItem img {
-        height: 120px;
-    }
-  }
+	.savedEventItem img {
+		height: 120px;
+	}
+}
 
 @media only screen and (max-width: 767px) {
-    .eventViews {
-        display: none;
-    }
+	.eventViews {
+		display: none;
+	}
 
-    .eventCanvasBtnCol {
-        display: block;
-    }
+	.eventCanvasBtnCol {
+		display: block;
+	}
 
-    .routerViews {
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
-  }
+	.routerViews {
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+	}
+}
 
-  @media only screen and (max-width: 575px) {
-    .savedEventItem img {
-        height: auto;
-    }
-  }
+@media only screen and (max-width: 575px) {
+	.savedEventItem img {
+		height: auto;
+	}
+}
