@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { Container, Row, Tabs, Tab } from 'react-bootstrap';
 import UserLogin from './UserLogin';
 import UserRegister from './UserRegister';

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Button, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BsPlusCircle } from 'react-icons/bs';
 import { ImTicket } from 'react-icons/im';
 import { RiBookmark3Line } from 'react-icons/ri';
 import APIURL from '../helpers/environment';
