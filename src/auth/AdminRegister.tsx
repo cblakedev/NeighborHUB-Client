@@ -179,7 +179,7 @@ class AdminRegister extends Component<AdminRegisterProps, AdminRegisterState> {
                             </Form.Group>
                         </Row>
                         <Button type="submit" className={`${this.state.submitClicked ? "d-none" : ""} mt-3 registerSubmitBtn`}>
-							Login
+							Register
 						</Button>
 						<Button className={`${this.state.submitClicked ? "" : "d-none"} mt-3 registerSpinner disabled`}>
 							<Spinner className="me-1" as="span" animation="border" size="sm" role="status" aria-hidden="true" />

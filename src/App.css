@@ -78,8 +78,17 @@ h5 {
 	text-decoration: none;
 }
 
+.userBtn a:hover {
+	color: #e3e3e3;
+}
+
 .userBtn {
 	margin: 10px;
+}
+
+.userBtn:hover {
+	background-color: #294f79 !important;
+	color: white !important;
 }
 
 .loginValidator {
@@ -93,9 +102,18 @@ h5 {
 	margin: 10px;
 }
 
+.adminBtn:hover {
+	background-color: #294f79 !important;
+	color: white !important;
+}
+
 .adminBtn a {
 	text-decoration: none;
 	color: white;
+}
+
+.adminBtn a:hover {
+	color: #e3e3e3;
 }
 
 .mainAuthWrapper {
